@@ -26,9 +26,9 @@ Enigmas are equipped with a typewriter-like keyboard for input, while output is 
 <p align="center">
   <img src="https://www.ciphermachinesandcryptology.com/img/enigma/hires-wehr3.jpg" alt="Enigma M3" width="216" height="300">
   <img src="https://www.ciphermachinesandcryptology.com/img/enigma/hires-wehr3rotors.jpg" alt="Enigma M3 rotors" width="321" height="300">
-   <img src="https://www.ciphermachinesandcryptology.com/img/enigma/hires-wehrmachtkey-stab.jpg" alt="Enigma M3 key sheet" width="410" height="300">
+   <img src="https://www.ciphermachinesandcryptology.com/img/enigma/hires-wehrmachtkey-stab.jpg" alt="Enigma M3 key sheet" width="537" height="393">
   <p align="center">
-    On the left an original Enigma M3, in the center 3 of the rotors used and on the right a key sheet [3]
+    An original Enigma M3, three of the rotors used and a key sheet [3]
   </p>
 </p>
 
@@ -42,11 +42,40 @@ An Enigma machine's setting (its cryptographic key in modern terms) specified ea
 
 For a message to be correctly encrypted and decrypted, both sender and receiver had to configure their Enigma in the same way; rotor selection and order, ring positions, plugboard connections and starting rotor positions must be identical. Except for the starting positions, these settings were established beforehand, distributed in key lists and changed daily. [4]
 
-## Install
+## Usage
 
-```bash
-npm install
-```
+1. Clone the repository
+
+2. Install project dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Import Enigma class:
+
+   ```ts
+   import Enigma from "node-enigma-m3/src/enigma";
+
+   const enigma = new Enigma(false); // true to enable logging
+   const message = "MY MESSAGE";
+   const settings = {
+     plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"],
+     reflector: "B",
+     ringOffset: "AAA",
+     rotors: [
+       { position: "A", type: "III" },
+       { position: "A", type: "II" },
+       { position: "A", type: "I" }
+     ]
+   };
+
+   enigma.configure(settings);
+   const encodedMessage = enigma.cypher(message);
+
+   console.log(encodedMessage);
+   // LD KLKXPWP
+   ```
 
 ## Testing
 
