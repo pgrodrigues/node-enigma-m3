@@ -1,4 +1,9 @@
-class Logger {
+export interface EnigmaLogger {
+  error(message: string): void;
+  info(message: string): void;
+}
+
+class Logger implements EnigmaLogger {
   private enabled: boolean;
 
   constructor(shouldLog: boolean) {

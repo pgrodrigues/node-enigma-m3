@@ -1,22 +1,27 @@
-import Logger from "./logger";
-import Plugboard from "./plugboard";
-import Reflector from "./reflector";
-import Rotors from "./rotors";
+import Logger, { EnigmaLogger } from "./logger";
+import Plugboard, { EnigmaPlugboard } from "./plugboard";
+import Reflector, { EnigmaReflector } from "./reflector";
+import Rotors, { EnigmaRotors, RotorSettings } from "./rotors";
 
-interface EnigmaSettings {
+type EnigmaSettings = {
   plugboard: string[];
   reflector: string;
-  rotors: { offset: string | number; position: string | number; type: string }[];
+  rotors: RotorSettings[];
+};
+
+export interface EnigmaInterface {
+  configure(settings: EnigmaSettings): void;
+  cypher(word: string): string;
 }
 
-class Enigma implements Enigma {
-  private logger: Logger;
+class Enigma implements EnigmaInterface {
+  private logger: EnigmaLogger;
 
-  private plugboard: Plugboard;
+  private plugboard: EnigmaPlugboard;
 
-  private reflector: Reflector;
+  private reflector: EnigmaReflector;
 
-  private rotors: Rotors;
+  private rotors: EnigmaRotors;
 
   constructor(shouldLog: boolean = false) {
     this.logger = new Logger(shouldLog);
@@ -30,13 +35,13 @@ class Enigma implements Enigma {
     let outputLetter: string = this.plugboard.scramble(letter);
 
     // The rotors will move accordingly providing additional scrambling (from right to left)
-    outputLetter = this.rotors.parse(outputLetter, true);
+    outputLetter = this.rotors.scramble(outputLetter, true);
 
     // The reflector returns the wired letter
     outputLetter = this.reflector.scramble(outputLetter);
 
     // The rotors will move accordingly providing additional scrambling (from left to right)
-    outputLetter = this.rotors.parse(outputLetter, false);
+    outputLetter = this.rotors.scramble(outputLetter, false);
 
     // The plugboard scrambles the letter again if the letter socket is connected to another letter socket
     outputLetter = this.plugboard.scramble(outputLetter);

@@ -1,19 +1,30 @@
-import type Logger from "logger";
+import { EnigmaLogger } from "logger";
 
-interface EnigmaRotor {
+type AvailableRotor = {
   ring: string;
   turnover: string[];
   type: string;
-}
+};
 
-interface MoveableRotor extends EnigmaRotor {
+interface SelectedRotor extends AvailableRotor {
   offset: string;
   position: string;
   stepCount: number;
 }
 
-class Rotors {
-  private readonly AVAILABLE_ROTORS: EnigmaRotor[] = [
+export interface RotorSettings {
+  offset: string | number;
+  position: string | number;
+  type: string;
+}
+
+export interface EnigmaRotors {
+  configure(rotorSettings: RotorSettings[]): void;
+  scramble(letter: string, rightToLeft: boolean): string;
+}
+
+class Rotors implements EnigmaRotors {
+  private readonly AVAILABLE_ROTORS: AvailableRotor[] = [
     { ring: "EKMFLGDQVZNTOWYHXUSPAIBRCJ", turnover: ["R"], type: "I" },
     { ring: "AJDKSIRUXBLHWTMCQGZNPYFVOE", turnover: ["F"], type: "II" },
     { ring: "BDFHJLCPRTXVZNYEIWGAKMUSQO", turnover: ["W"], type: "III" },
@@ -24,11 +35,11 @@ class Rotors {
     { ring: "FKQHTLXOCBJSPDZRAMEWNIUYGV", turnover: ["A", "N"], type: "VIII" }
   ];
 
-  private logger: Logger;
+  private logger: EnigmaLogger;
 
-  private rotors: MoveableRotor[] = [];
+  private rotors: SelectedRotor[] = [];
 
-  constructor(logger: Logger) {
+  constructor(logger: EnigmaLogger) {
     this.logger = logger;
   }
 
@@ -49,17 +60,8 @@ class Rotors {
     return letter.charCodeAt(0) - 65;
   }
 
-  private performStepping(index: number): void {
-    this.rotors[index].position = this.applyOffsetToLetter(this.rotors[index].position, 1);
-    this.rotors[index].stepCount += 1;
-
-    this.logger.info(
-      `[Rotor ${this.rotors[index].type}] position is now ${this.rotors[index].position}`
-    );
-  }
-
-  private scramble(index: number, letter: string, rightToLeft: boolean): string {
-    const rotor: MoveableRotor = this.rotors[index];
+  private performScrambling(index: number, letter: string, rightToLeft: boolean): string {
+    const rotor: SelectedRotor = this.rotors[index];
 
     let outputLetter: string = this.applyOffsetToLetter(
       letter,
@@ -93,9 +95,16 @@ class Rotors {
     return outputLetter;
   }
 
-  configure(
-    rotorsSettings: { offset: string | number; position: string | number; type: string }[]
-  ): void {
+  private performStepping(index: number): void {
+    this.rotors[index].position = this.applyOffsetToLetter(this.rotors[index].position, 1);
+    this.rotors[index].stepCount += 1;
+
+    this.logger.info(
+      `[Rotor ${this.rotors[index].type}] position is now ${this.rotors[index].position}`
+    );
+  }
+
+  configure(rotorsSettings: RotorSettings[]): void {
     if (!rotorsSettings) {
       const errorMessage: string = "Rotors settings are missing";
       this.logger.error(errorMessage);
@@ -124,7 +133,7 @@ class Rotors {
     }
 
     // Define the rotors
-    const rotors: MoveableRotor[] = [];
+    const rotors: SelectedRotor[] = [];
     rotorsSettings.forEach((rs) => {
       const rotor = this.AVAILABLE_ROTORS.find((availableRotor) => availableRotor.type === rs.type);
       let offset: string;
@@ -168,14 +177,14 @@ class Rotors {
     this.rotors = [...rotors].reverse();
   }
 
-  parse(letter: string, rightToLeft: boolean): string {
+  scramble(letter: string, rightToLeft: boolean): string {
     let outputLetter: string = letter;
     this.logger.info(
       `[${this.rotors[0].position}] [${this.rotors[1].position}] [${this.rotors[2].position}]`
     );
 
-    // The rotors are stepped before each letter is encrypted
     if (rightToLeft) {
+      // During right-to-left flow, the rotors are stepped before each letter is encrypted
       let midStepped: boolean = false;
 
       // Always rotate the rightmost rotor
@@ -205,14 +214,13 @@ class Rotors {
         }
       }
 
-      outputLetter = this.scramble(0, outputLetter, rightToLeft);
-      outputLetter = this.scramble(1, outputLetter, rightToLeft);
-      outputLetter = this.scramble(2, outputLetter, rightToLeft);
+      outputLetter = this.performScrambling(0, outputLetter, rightToLeft);
+      outputLetter = this.performScrambling(1, outputLetter, rightToLeft);
+      outputLetter = this.performScrambling(2, outputLetter, rightToLeft);
     } else {
-      // Left-to-right movement: Encrypt the letter through all rotors
-      outputLetter = this.scramble(2, outputLetter, rightToLeft);
-      outputLetter = this.scramble(1, outputLetter, rightToLeft);
-      outputLetter = this.scramble(0, outputLetter, rightToLeft);
+      outputLetter = this.performScrambling(2, outputLetter, rightToLeft);
+      outputLetter = this.performScrambling(1, outputLetter, rightToLeft);
+      outputLetter = this.performScrambling(0, outputLetter, rightToLeft);
     }
 
     return outputLetter;
