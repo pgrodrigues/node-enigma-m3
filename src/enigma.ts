@@ -6,11 +6,10 @@ import Rotors from "./rotors";
 interface EnigmaSettings {
   plugboard: string[];
   reflector: string;
-  ringOffset: string;
-  rotors: { position: string; type: string }[];
+  rotors: { offset: string | number; position: string | number; type: string }[];
 }
 
-class Enigma {
+class Enigma implements Enigma {
   private logger: Logger;
 
   private plugboard: Plugboard;
@@ -28,7 +27,7 @@ class Enigma {
 
   private pressLetter(letter: string): string {
     // On the plugboard, if the socket of the letter being cyphered is connected to the socket of another letter, the letter being cyphered gets that value
-    let outputLetter = this.plugboard.scramble(letter);
+    let outputLetter: string = this.plugboard.scramble(letter);
 
     // The rotors will move accordingly providing additional scrambling (from right to left)
     outputLetter = this.rotors.parse(outputLetter, true);
@@ -48,18 +47,18 @@ class Enigma {
 
   configure(settings: EnigmaSettings): void {
     this.plugboard.configure(settings.plugboard);
-    this.rotors.configure(settings.rotors, settings.ringOffset);
+    this.rotors.configure(settings.rotors);
     this.reflector.configure(settings.reflector);
   }
 
   cypher(word: string): string {
-    let outputWord = "";
+    let outputWord: string = "";
 
     // Parse word and cypher letter
     [...word.trim()].forEach((char, index) => {
       // Allow any character from "a" to "z", case insensitive and white space
       if (!/^[a-z ]+$/i.test(char)) {
-        const errorMessage = `Invalid character "${char}" found in position "${index}"`;
+        const errorMessage: string = `Invalid character "${char}" found in position "${index}"`;
         this.logger.error(errorMessage);
         throw new Error(errorMessage);
       } else if (char === " ") {

@@ -11,25 +11,25 @@ class Plugboard {
 
   configure(pairs: string[]): void {
     if (!pairs) {
-      const errorMessage = "Plugboard settings are missing";
+      const errorMessage: string = "Plugboard settings are missing";
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     if (!Array.isArray(pairs)) {
-      const errorMessage = "Plugboard pairs must be an array";
+      const errorMessage: string = "Plugboard pairs must be an array";
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     if (pairs.length > 0) {
       if (pairs.some((p) => p.length !== 2)) {
-        const errorMessage = "Each plugboard pair must consist of exactly two letters";
+        const errorMessage: string = "Each plugboard pair must consist of exactly two letters";
         this.logger.error(errorMessage);
         throw new Error(errorMessage);
       }
       if (!/^(?:(.)(?!.*?\1))+$/.test(pairs.join(""))) {
-        const errorMessage = "Plugboard pairs must not contain duplicate letters";
+        const errorMessage: string = "Plugboard pairs must not contain duplicate letters";
         this.logger.error(errorMessage);
         throw new Error(errorMessage);
       }
@@ -39,7 +39,7 @@ class Plugboard {
   }
 
   scramble(letter: string): string {
-    let outputLetter = letter;
+    let outputLetter: string = letter;
 
     for (const pair of this.pairs) {
       if (pair[0] === letter) {

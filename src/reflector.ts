@@ -39,7 +39,7 @@ class Reflector {
 
   configure(type: string): void {
     if (!type) {
-      const errorMessage = "Reflector settings are missing";
+      const errorMessage: string = "Reflector settings are missing";
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
@@ -49,7 +49,7 @@ class Reflector {
     );
 
     if (!reflectorFound) {
-      const errorMessage = `Invalid reflector type: ${type}`;
+      const errorMessage: string = `Invalid reflector type: ${type}`;
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
@@ -59,12 +59,12 @@ class Reflector {
 
   scramble(letter: string): string {
     if (!this.reflector) {
-      const errorMessage = "Reflector not configured";
+      const errorMessage: string = "Reflector not configured";
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
-    let outputLetter = letter;
+    let outputLetter: string = letter;
 
     for (const pair of this.reflector.pairs) {
       if (pair[0] === letter) {

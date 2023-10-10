@@ -60,13 +60,13 @@ For a message to be correctly encrypted and decrypted, both sender and receiver 
    const enigma = new Enigma(false); // true to enable logging
    const message = "MY MESSAGE";
    const settings = {
-     plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"],
-     reflector: "B",
-     ringOffset: "AAA",
+     plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
+     reflector: "B", // Reflector types: "A", "B", "C", "B Thin", "C Thin"
      rotors: [
-       { position: "A", type: "III" },
-       { position: "A", type: "II" },
-       { position: "A", type: "I" }
+       // Offset and Position: "A" to "Z" or 1 to 26. Rotor types: "I", "II", "III", "IV", "V", "VI", "VII", "VIII"
+       { offset: "A", position: "A", type: "III" },
+       { offset: "A", position: "A", type: "II" },
+       { offset: "A", position: "A", type: "I" }
      ]
    };
 
@@ -109,11 +109,10 @@ Settings:
 {
   "plugboard": ["AM", "FI", "NV", "PS", "TU", "WZ"],
   "reflector": "A",
-  "ringOffset": "XMV",
   "rotors": [
-    { "position": "A", "type": "II" },
-    { "position": "B", "type": "I" },
-    { "position": "L", "type": "III" }
+    { "offset": "X", "position": "A", "type": "II" },
+    { "offset": "M", "position": "B", "type": "I" },
+    { "offset": "V", "position": "L", "type": "III" }
   ]
 }
 ```
@@ -142,11 +141,10 @@ Settings:
 {
   "plugboard": ["AV", "BS", "CG", "DL", "FU", "HZ", "IN", "KM", "OW", "RX"],
   "reflector": "B",
-  "ringOffset": "BUL",
   "rotors": [
-    { "position": "B", "type": "II" },
-    { "position": "L", "type": "IV" },
-    { "position": "A", "type": "V" }
+    { "offset": "B", "position": "B", "type": "II" },
+    { "offset": "U", "position": "L", "type": "IV" },
+    { "offset": "L", "position": "A", "type": "V" }
   ]
 }
 ```
@@ -175,11 +173,10 @@ Settings:
 {
   "plugboard": ["AV", "BS", "CG", "DL", "FU", "HZ", "IN", "KM", "OW", "RX"],
   "reflector": "B",
-  "ringOffset": "BUL",
   "rotors": [
-    { "position": "L", "type": "II" },
-    { "position": "S", "type": "IV" },
-    { "position": "D", "type": "V" }
+    { "offset": "B", "position": "L", "type": "II" },
+    { "offset": "U", "position": "S", "type": "IV" },
+    { "offset": "L", "position": "D", "type": "V" }
   ]
 }
 ```
@@ -208,11 +205,10 @@ Settings:
 {
   "plugboard": ["AN", "EZ", "HK", "IJ", "LR", "MQ", "OT", "PV", "SW", "UX"],
   "reflector": "B",
-  "ringOffset": "AHM",
   "rotors": [
-    { "position": "U", "type": "III" },
-    { "position": "Z", "type": "VI" },
-    { "position": "V", "type": "VIII" }
+    { "offset": "A", "position": "U", "type": "III" },
+    { "offset": "H", "position": "Z", "type": "VI" },
+    { "offset": "M", "position": "V", "type": "VIII" }
   ]
 }
 ```

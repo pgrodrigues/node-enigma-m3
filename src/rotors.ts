@@ -33,7 +33,7 @@ class Rotors {
   }
 
   private applyOffsetToLetter(letter: string, offset: number): string {
-    let index = this.getLetterIndex(letter);
+    let index: number = this.getLetterIndex(letter);
     index += 26;
     index += offset;
     index %= 26;
@@ -59,11 +59,14 @@ class Rotors {
   }
 
   private scramble(index: number, letter: string, rightToLeft: boolean): string {
-    const rotor = this.rotors[index];
+    const rotor: MoveableRotor = this.rotors[index];
 
-    let outputLetter = this.applyOffsetToLetter(letter, this.getLetterIndex(rotor.position));
+    let outputLetter: string = this.applyOffsetToLetter(
+      letter,
+      this.getLetterIndex(rotor.position)
+    );
 
-    const entryContactLetter = this.applyOffsetToLetter(
+    const entryContactLetter: string = this.applyOffsetToLetter(
       outputLetter,
       -this.getLetterIndex(rotor.offset)
     );
@@ -74,7 +77,7 @@ class Rotors {
       outputLetter = this.getLetterFromIndex(rotor.ring.indexOf(entryContactLetter));
     }
 
-    const exitContactLetter = this.applyOffsetToLetter(
+    const exitContactLetter: string = this.applyOffsetToLetter(
       outputLetter,
       this.getLetterIndex(rotor.offset)
     );
@@ -91,84 +94,89 @@ class Rotors {
   }
 
   configure(
-    rotorsSettings: { position: string; type: string }[],
-    ringOffsetSettings: string
+    rotorsSettings: { offset: string | number; position: string | number; type: string }[]
   ): void {
     if (!rotorsSettings) {
-      const errorMessage = "Rotors settings are missing";
+      const errorMessage: string = "Rotors settings are missing";
+      this.logger.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    if (!Array.isArray(rotorsSettings)) {
+      const errorMessage: string = "Rotors settings must be an array";
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     if (
-      !Array.isArray(rotorsSettings) ||
-      rotorsSettings.length === 0 ||
+      rotorsSettings.length !== 3 ||
       !rotorsSettings.every(
         (s) =>
+          Object.prototype.hasOwnProperty.call(s, "offset") &&
           Object.prototype.hasOwnProperty.call(s, "position") &&
           Object.prototype.hasOwnProperty.call(s, "type")
       )
     ) {
-      const errorMessage = "Invalid rotors settings";
-      this.logger.error(errorMessage);
-      throw new Error(errorMessage);
-    }
-
-    if (!ringOffsetSettings) {
-      const errorMessage = "Ring offset settings are missing";
-      this.logger.error(errorMessage);
-      throw new Error(errorMessage);
-    }
-
-    if (!/^[A-Z]{3}$/.test(ringOffsetSettings)) {
-      const errorMessage = "Invalid ring offset";
+      const errorMessage: string =
+        "Rotors settings must include the ring offset, position and type of the three rotors";
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     // Define the rotors
     const rotors: MoveableRotor[] = [];
-    rotorsSettings.forEach((rs, index) => {
+    rotorsSettings.forEach((rs) => {
       const rotor = this.AVAILABLE_ROTORS.find((availableRotor) => availableRotor.type === rs.type);
+      let offset: string;
+      let position: string;
 
       if (!rotor) {
-        const errorMessage = `Invalid rotor type: ${rs.type}`;
+        const errorMessage: string = `Invalid rotor type: ${rs.type}`;
         this.logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
       if (rotors.some((r) => r.type === rs.type)) {
-        const errorMessage = `There can't be multiple rotors of the same type: ${rs.type}`;
+        const errorMessage: string = `There can't be multiple rotors of the same type: ${rs.type}`;
         this.logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
-      if (!/^[A-Z]$/.test(rs.position)) {
-        const errorMessage = "Invalid rotor position";
+      if (typeof rs.position === "string" && /^[A-Z]$/.test(rs.position)) {
+        position = rs.position;
+      } else if (typeof rs.position === "number" && rs.position > 0 && rs.position < 27) {
+        position = this.getLetterFromIndex(rs.position - 1);
+      } else {
+        const errorMessage: string = "Invalid rotor position";
         this.logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
-      rotors.push({
-        ...rotor,
-        offset: ringOffsetSettings.charAt(index),
-        position: rs.position,
-        stepCount: 0
-      });
+      if (typeof rs.offset === "string" && /^[A-Z]$/.test(rs.offset)) {
+        offset = rs.offset;
+      } else if (typeof rs.offset === "number" && rs.offset > 0 && rs.offset < 27) {
+        offset = this.getLetterFromIndex(rs.offset - 1);
+      } else {
+        const errorMessage: string = "Invalid rotor ring offset";
+        this.logger.error(errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      rotors.push({ ...rotor, offset, position, stepCount: 0 });
     });
 
     this.rotors = [...rotors].reverse();
   }
 
   parse(letter: string, rightToLeft: boolean): string {
-    let outputLetter = letter;
+    let outputLetter: string = letter;
     this.logger.info(
       `[${this.rotors[0].position}] [${this.rotors[1].position}] [${this.rotors[2].position}]`
     );
 
     // The rotors are stepped before each letter is encrypted
     if (rightToLeft) {
-      let midStepped = false;
+      let midStepped: boolean = false;
 
       // Always rotate the rightmost rotor
       this.performStepping(0);

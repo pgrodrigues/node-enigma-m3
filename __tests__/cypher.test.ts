@@ -8,11 +8,10 @@ describe("Cypher", () => {
       const settings = {
         plugboard: [],
         reflector: "B",
-        ringOffset: "AAA",
         rotors: [
-          { position: "A", type: "I" },
-          { position: "A", type: "II" },
-          { position: "A", type: "III" }
+          { offset: "A", position: "A", type: "I" },
+          { offset: "A", position: "A", type: "II" },
+          { offset: "A", position: "A", type: "III" }
         ]
       };
 
@@ -29,11 +28,10 @@ describe("Cypher", () => {
       const settings = {
         plugboard: [],
         reflector: "B",
-        ringOffset: "AAA",
         rotors: [
-          { position: "A", type: "I" },
-          { position: "A", type: "II" },
-          { position: "A", type: "III" }
+          { offset: "A", position: "A", type: "I" },
+          { offset: "A", position: "A", type: "II" },
+          { offset: "A", position: "A", type: "III" }
         ]
       };
 
@@ -49,11 +47,10 @@ describe("Cypher", () => {
       const settings = {
         plugboard: [],
         reflector: "B",
-        ringOffset: "AAA",
         rotors: [
-          { position: "Z", type: "V" },
-          { position: "P", type: "I" },
-          { position: "K", type: "III" }
+          { offset: "A", position: "Z", type: "V" },
+          { offset: "A", position: "P", type: "I" },
+          { offset: "A", position: "K", type: "III" }
         ]
       };
 
@@ -73,11 +70,10 @@ describe("Cypher", () => {
       const settings = {
         plugboard: ["AM", "FI", "NV", "PS", "TU", "WZ"],
         reflector: "A",
-        ringOffset: "XMV",
         rotors: [
-          { position: "A", type: "II" },
-          { position: "B", type: "I" },
-          { position: "L", type: "III" }
+          { offset: "X", position: "A", type: "II" },
+          { offset: "M", position: "B", type: "I" },
+          { offset: "V", position: "L", type: "III" }
         ]
       };
 
@@ -95,11 +91,10 @@ describe("Cypher", () => {
       const settings = {
         plugboard: ["AV", "BS", "CG", "DL", "FU", "HZ", "IN", "KM", "OW", "RX"],
         reflector: "B",
-        ringOffset: "BUL",
         rotors: [
-          { position: "B", type: "II" },
-          { position: "L", type: "IV" },
-          { position: "A", type: "V" }
+          { offset: "B", position: "B", type: "II" },
+          { offset: "U", position: "L", type: "IV" },
+          { offset: "L", position: "A", type: "V" }
         ]
       };
 
@@ -117,11 +112,10 @@ describe("Cypher", () => {
       const settings = {
         plugboard: ["AV", "BS", "CG", "DL", "FU", "HZ", "IN", "KM", "OW", "RX"],
         reflector: "B",
-        ringOffset: "BUL",
         rotors: [
-          { position: "L", type: "II" },
-          { position: "S", type: "IV" },
-          { position: "D", type: "V" }
+          { offset: "B", position: "L", type: "II" },
+          { offset: "U", position: "S", type: "IV" },
+          { offset: "L", position: "D", type: "V" }
         ]
       };
 
@@ -139,11 +133,10 @@ describe("Cypher", () => {
       const settings = {
         plugboard: ["AN", "EZ", "HK", "IJ", "LR", "MQ", "OT", "PV", "SW", "UX"],
         reflector: "B",
-        ringOffset: "AHM",
         rotors: [
-          { position: "U", type: "III" },
-          { position: "Z", type: "VI" },
-          { position: "V", type: "VIII" }
+          { offset: "A", position: "U", type: "III" },
+          { offset: "H", position: "Z", type: "VI" },
+          { offset: "M", position: "V", type: "VIII" }
         ]
       };
 

@@ -42,11 +42,10 @@ describe("Enigma", () => {
       const settings = {
         plugboard: [],
         reflector: "B",
-        ringOffset: "AAA",
         rotors: [
-          { position: "A", type: "I" },
-          { position: "A", type: "II" },
-          { position: "A", type: "III" }
+          { offset: "A", position: "A", type: "I" },
+          { offset: "A", position: "A", type: "II" },
+          { offset: "A", position: "A", type: "III" }
         ]
       };
 
@@ -54,7 +53,7 @@ describe("Enigma", () => {
 
       expect(plugboardSpy).toHaveBeenCalledWith(settings.plugboard);
       expect(reflectorSpy).toHaveBeenCalledWith(settings.reflector);
-      expect(rotorsSpy).toHaveBeenCalledWith(settings.rotors, settings.ringOffset);
+      expect(rotorsSpy).toHaveBeenCalledWith(settings.rotors);
     });
   });
 });

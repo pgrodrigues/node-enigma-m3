@@ -1,10 +1,9 @@
 {
   "plugboard": ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"],
   "reflector": "B",
-  "ringOffset": "AAA",
   "rotors": [
-    { "position": "A", "type": "III" },
-    { "position": "A", "type": "II" },
-    { "position": "A", "type": "I" }
+    { "offset": "A", "position": "A", "type": "III" },
+    { "offset": "A", "position": "A", "type": "II" },
+    { "offset": "A", "position": "A", "type": "I" }
   ]
 }
