@@ -1,4 +1,4 @@
-import { EnigmaLogger } from "logger";
+import { LoggerInterface } from "logger";
 
 type AvailableRotor = {
   ring: string;
@@ -6,24 +6,24 @@ type AvailableRotor = {
   type: string;
 };
 
-interface SelectedRotor extends AvailableRotor {
+type SelectedRotor = AvailableRotor & {
   offset: string;
   position: string;
   stepCount: number;
-}
+};
 
-export interface RotorSettings {
+export interface RotorSettingsInterface {
   offset: string | number;
   position: string | number;
   type: string;
 }
 
-export interface EnigmaRotors {
-  configure(rotorSettings: RotorSettings[]): void;
+export interface RotorsInterface {
+  configure(rotorSettings: RotorSettingsInterface[]): void;
   scramble(letter: string, rightToLeft: boolean): string;
 }
 
-export class Rotors implements EnigmaRotors {
+export class Rotors implements RotorsInterface {
   private readonly AVAILABLE_ROTORS: AvailableRotor[] = [
     { ring: "EKMFLGDQVZNTOWYHXUSPAIBRCJ", turnover: ["R"], type: "I" },
     { ring: "AJDKSIRUXBLHWTMCQGZNPYFVOE", turnover: ["F"], type: "II" },
@@ -35,11 +35,11 @@ export class Rotors implements EnigmaRotors {
     { ring: "FKQHTLXOCBJSPDZRAMEWNIUYGV", turnover: ["A", "N"], type: "VIII" }
   ];
 
-  private logger: EnigmaLogger;
+  private logger: LoggerInterface;
 
   private rotors: SelectedRotor[] = [];
 
-  constructor(logger: EnigmaLogger) {
+  constructor(logger: LoggerInterface) {
     this.logger = logger;
   }
 
@@ -104,7 +104,7 @@ export class Rotors implements EnigmaRotors {
     );
   }
 
-  configure(rotorsSettings: RotorSettings[]): void {
+  configure(rotorsSettings: RotorSettingsInterface[]): void {
     if (!rotorsSettings) {
       const errorMessage: string = "Rotors settings are missing";
       this.logger.error(errorMessage);

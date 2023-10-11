@@ -47,11 +47,11 @@ For a message to be correctly encrypted and decrypted, both sender and receiver 
 Import Enigma class:
 
 ```ts
-import { Enigma, EnigmaInterface, EnigmaSettings } from "node-enigma-m3";
+import { Enigma, EnigmaInterface, SettingsInterface } from "node-enigma-m3";
 
 const enigma: EnigmaInterface = new Enigma(false); // Instatiate with true to enable logging
 const message: string = "MY MESSAGE";
-const settings: EnigmaSettings = {
+const settings: SettingsInterface = {
   plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
   reflector: "B", // Reflector types: "A", "B", "C", "B Thin", "C Thin"
   rotors: [
@@ -92,7 +92,7 @@ The unit tests are available in the `__tests__` folder. In order to run the test
 npm test
 ```
 
-Besides unit tests, original cyphered messages from that period [3] were also included.
+Besides unit tests, original cyphered messages from that period [3] were also included in `__tests__/cypher.test.ts`.
 
 ### Enigma Instruction Manual, 1930
 

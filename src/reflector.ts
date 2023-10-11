@@ -1,16 +1,16 @@
-import { EnigmaLogger } from "logger";
+import { LoggerInterface } from "logger";
 
 type AvailableReflector = {
   pairs: string[];
   type: string;
 };
 
-export interface EnigmaReflector {
+export interface ReflectorInterface {
   configure(type: string): void;
   scramble(letter: string): string;
 }
 
-export class Reflector implements EnigmaReflector {
+export class Reflector implements ReflectorInterface {
   private readonly AVAILABLE_REFLECTORS: AvailableReflector[] = [
     {
       pairs: ["AE", "BJ", "CM", "DZ", "FL", "GY", "HX", "IV", "KW", "NR", "OQ", "PU", "ST"],
@@ -34,11 +34,11 @@ export class Reflector implements EnigmaReflector {
     }
   ];
 
-  private logger: EnigmaLogger;
+  private logger: LoggerInterface;
 
   private reflector: AvailableReflector | undefined;
 
-  constructor(logger: EnigmaLogger) {
+  constructor(logger: LoggerInterface) {
     this.logger = logger;
   }
 

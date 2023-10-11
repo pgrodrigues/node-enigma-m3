@@ -1,16 +1,16 @@
-import { EnigmaLogger } from "logger";
+import { LoggerInterface } from "logger";
 
-export interface EnigmaPlugboard {
+export interface PlugboardInterface {
   configure(pairs: string[]): void;
   scramble(letter: string): string;
 }
 
-export class Plugboard implements EnigmaPlugboard {
-  private logger: EnigmaLogger;
+export class Plugboard implements PlugboardInterface {
+  private logger: LoggerInterface;
 
   private pairs: string[] = [];
 
-  constructor(logger: EnigmaLogger) {
+  constructor(logger: LoggerInterface) {
     this.logger = logger;
   }
 
