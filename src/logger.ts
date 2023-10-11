@@ -3,7 +3,7 @@ export interface EnigmaLogger {
   info(message: string): void;
 }
 
-class Logger implements EnigmaLogger {
+export class Logger implements EnigmaLogger {
   private enabled: boolean;
 
   constructor(shouldLog: boolean) {
@@ -22,5 +22,3 @@ class Logger implements EnigmaLogger {
     }
   }
 }
-
-export default Logger;

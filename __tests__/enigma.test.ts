@@ -1,8 +1,8 @@
-import Enigma from "../src/enigma";
-import Logger from "../src/logger";
-import Plugboard from "../src/plugboard";
-import Reflector from "../src/reflector";
-import Rotors from "../src/rotors";
+import { Enigma } from "../src/enigma";
+import { Logger } from "../src/logger";
+import { Plugboard } from "../src/plugboard";
+import { Reflector } from "../src/reflector";
+import { Rotors } from "../src/rotors";
 
 jest.mock("../src/logger");
 jest.mock("../src/plugboard");

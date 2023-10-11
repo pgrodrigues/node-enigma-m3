@@ -5,7 +5,7 @@ export interface EnigmaPlugboard {
   scramble(letter: string): string;
 }
 
-class Plugboard implements EnigmaPlugboard {
+export class Plugboard implements EnigmaPlugboard {
   private logger: EnigmaLogger;
 
   private pairs: string[] = [];
@@ -61,5 +61,3 @@ class Plugboard implements EnigmaPlugboard {
     return outputLetter;
   }
 }
-
-export default Plugboard;

@@ -1,20 +1,20 @@
-import Logger, { EnigmaLogger } from "./logger";
-import Plugboard, { EnigmaPlugboard } from "./plugboard";
-import Reflector, { EnigmaReflector } from "./reflector";
-import Rotors, { EnigmaRotors, RotorSettings } from "./rotors";
+import { EnigmaLogger, Logger } from "./logger";
+import { EnigmaPlugboard, Plugboard } from "./plugboard";
+import { EnigmaReflector, Reflector } from "./reflector";
+import { EnigmaRotors, Rotors, RotorSettings } from "./rotors";
 
-type EnigmaSettings = {
+export interface EnigmaSettings {
   plugboard: string[];
   reflector: string;
   rotors: RotorSettings[];
-};
+}
 
 export interface EnigmaInterface {
   configure(settings: EnigmaSettings): void;
   cypher(word: string): string;
 }
 
-class Enigma implements EnigmaInterface {
+export class Enigma implements EnigmaInterface {
   private logger: EnigmaLogger;
 
   private plugboard: EnigmaPlugboard;
@@ -77,5 +77,3 @@ class Enigma implements EnigmaInterface {
     return outputWord;
   }
 }
-
-export default Enigma;

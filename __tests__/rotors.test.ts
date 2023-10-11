@@ -1,5 +1,5 @@
-import Logger from "../src/logger";
-import Rotors from "../src/rotors";
+import { Logger } from "../src/logger";
+import { Rotors } from "../src/rotors";
 
 jest.mock("../src/logger");
 

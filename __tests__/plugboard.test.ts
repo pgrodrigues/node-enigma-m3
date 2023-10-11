@@ -1,5 +1,5 @@
-import Logger from "../src/logger";
-import Plugboard from "../src/plugboard";
+import { Logger } from "../src/logger";
+import { Plugboard } from "../src/plugboard";
 
 jest.mock("../src/logger");
 

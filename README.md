@@ -44,46 +44,55 @@ For a message to be correctly encrypted and decrypted, both sender and receiver 
 
 ## Usage
 
-1. Clone the repository
+Import Enigma class:
 
-2. Install project dependencies:
+```ts
+import { Enigma, EnigmaInterface, EnigmaSettings } from "node-enigma-m3";
 
-   ```bash
-   npm install
-   ```
+const enigma: EnigmaInterface = new Enigma(false); // Instatiate with true to enable logging
+const message: string = "MY MESSAGE";
+const settings: EnigmaSettings = {
+  plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
+  reflector: "B", // Reflector types: "A", "B", "C", "B Thin", "C Thin"
+  rotors: [
+    // Offset and Position: "A" to "Z" or 1 to 26. Rotor types: "I", "II", "III", "IV", "V", "VI", "VII", "VIII"
+    { offset: "A", position: "A", type: "III" },
+    { offset: "A", position: "A", type: "II" },
+    { offset: "A", position: "A", type: "I" }
+  ]
+};
 
-3. Import Enigma class:
+enigma.configure(settings);
+const encodedMessage: string = enigma.cypher(message);
 
-   ```ts
-   import Enigma from "node-enigma-m3/src/enigma";
+console.log(`Encoded message: ${encodedMessage}`); // Encoded message: LD KLKXPWP
+```
 
-   const enigma = new Enigma(false); // true to enable logging
-   const message = "MY MESSAGE";
-   const settings = {
-     plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
-     reflector: "B", // Reflector types: "A", "B", "C", "B Thin", "C Thin"
-     rotors: [
-       // Offset and Position: "A" to "Z" or 1 to 26. Rotor types: "I", "II", "III", "IV", "V", "VI", "VII", "VIII"
-       { offset: "A", position: "A", type: "III" },
-       { offset: "A", position: "A", type: "II" },
-       { offset: "A", position: "A", type: "I" }
-     ]
-   };
+## Development
 
-   enigma.configure(settings);
-   const encodedMessage = enigma.cypher(message);
+Install project dependencies:
 
-   console.log(encodedMessage);
-   // LD KLKXPWP
-   ```
+```bash
+npm install
+```
+
+Build development version:
+
+```bash
+npm run build
+```
+
+The build will be available in the `dist` folder.
 
 ## Testing
 
-Besides unit tests, original cyphered messages from that period [3] were also included. In order to run the tests:
+The unit tests are available in the `__tests__` folder. In order to run the tests:
 
 ```bash
 npm test
 ```
+
+Besides unit tests, original cyphered messages from that period [3] were also included.
 
 ### Enigma Instruction Manual, 1930
 

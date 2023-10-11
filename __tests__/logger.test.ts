@@ -1,4 +1,4 @@
-import Logger from "../src/logger";
+import { Logger } from "../src/logger";
 
 describe("Logger", () => {
   test("Should not log error messages when logging is disabled", () => {

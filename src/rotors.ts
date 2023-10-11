@@ -23,7 +23,7 @@ export interface EnigmaRotors {
   scramble(letter: string, rightToLeft: boolean): string;
 }
 
-class Rotors implements EnigmaRotors {
+export class Rotors implements EnigmaRotors {
   private readonly AVAILABLE_ROTORS: AvailableRotor[] = [
     { ring: "EKMFLGDQVZNTOWYHXUSPAIBRCJ", turnover: ["R"], type: "I" },
     { ring: "AJDKSIRUXBLHWTMCQGZNPYFVOE", turnover: ["F"], type: "II" },
@@ -226,5 +226,3 @@ class Rotors implements EnigmaRotors {
     return outputLetter;
   }
 }
-
-export default Rotors;

@@ -10,7 +10,7 @@ export interface EnigmaReflector {
   scramble(letter: string): string;
 }
 
-class Reflector implements EnigmaReflector {
+export class Reflector implements EnigmaReflector {
   private readonly AVAILABLE_REFLECTORS: AvailableReflector[] = [
     {
       pairs: ["AE", "BJ", "CM", "DZ", "FL", "GY", "HX", "IV", "KW", "NR", "OQ", "PU", "ST"],
@@ -86,5 +86,3 @@ class Reflector implements EnigmaReflector {
     return outputLetter;
   }
 }
-
-export default Reflector;

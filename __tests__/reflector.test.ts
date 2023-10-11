@@ -1,5 +1,5 @@
-import Logger from "../src/logger";
-import Reflector from "../src/reflector";
+import { Logger } from "../src/logger";
+import { Reflector } from "../src/reflector";
 
 jest.mock("../src/logger");
 

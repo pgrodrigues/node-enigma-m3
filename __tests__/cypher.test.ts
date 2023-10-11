@@ -1,4 +1,4 @@
-import Enigma from "../src/enigma";
+import { Enigma } from "../src/enigma";
 
 describe("Cypher", () => {
   describe("Basic", () => {
