@@ -1,4 +1,4 @@
-import { LoggerInterface } from "logger";
+import { LoggerInterface } from "./logger";
 
 type AvailableReflector = {
   pairs: string[];
@@ -34,18 +34,18 @@ export class Reflector implements ReflectorInterface {
     }
   ];
 
-  private logger: LoggerInterface;
+  private _logger: LoggerInterface;
 
-  private reflector: AvailableReflector | undefined;
+  private _reflector: AvailableReflector | undefined;
 
   constructor(logger: LoggerInterface) {
-    this.logger = logger;
+    this._logger = logger;
   }
 
   configure(type: string): void {
     if (!type) {
       const errorMessage: string = "Reflector settings are missing";
-      this.logger.error(errorMessage);
+      this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
@@ -55,23 +55,23 @@ export class Reflector implements ReflectorInterface {
 
     if (!reflectorFound) {
       const errorMessage: string = `Invalid reflector type: ${type}`;
-      this.logger.error(errorMessage);
+      this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
-    this.reflector = reflectorFound;
+    this._reflector = reflectorFound;
   }
 
   scramble(letter: string): string {
-    if (!this.reflector) {
+    if (!this._reflector) {
       const errorMessage: string = "Reflector not configured";
-      this.logger.error(errorMessage);
+      this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     let outputLetter: string = letter;
 
-    for (const pair of this.reflector.pairs) {
+    for (const pair of this._reflector.pairs) {
       if (pair[0] === letter) {
         outputLetter = pair[1];
         break;
@@ -82,7 +82,7 @@ export class Reflector implements ReflectorInterface {
       }
     }
 
-    this.logger.info(`[Reflector ${this.reflector.type}] ${letter} => ${outputLetter}`);
+    this._logger.info(`[Reflector ${this._reflector.type}] ${letter} => ${outputLetter}`);
     return outputLetter;
   }
 }

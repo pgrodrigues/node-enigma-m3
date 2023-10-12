@@ -15,45 +15,45 @@ export interface EnigmaInterface {
 }
 
 export class Enigma implements EnigmaInterface {
-  private logger: LoggerInterface;
+  private _logger: LoggerInterface;
 
-  private plugboard: PlugboardInterface;
+  private _plugboard: PlugboardInterface;
 
-  private reflector: ReflectorInterface;
+  private _reflector: ReflectorInterface;
 
-  private rotors: RotorsInterface;
+  private _rotors: RotorsInterface;
 
   constructor(shouldLog: boolean = false) {
-    this.logger = new Logger(shouldLog);
-    this.plugboard = new Plugboard(this.logger);
-    this.reflector = new Reflector(this.logger);
-    this.rotors = new Rotors(this.logger);
+    this._logger = new Logger(shouldLog);
+    this._plugboard = new Plugboard(this._logger);
+    this._reflector = new Reflector(this._logger);
+    this._rotors = new Rotors(this._logger);
   }
 
   private pressLetter(letter: string): string {
     // On the plugboard, if the socket of the letter being cyphered is connected to the socket of another letter, the letter being cyphered gets that value
-    let outputLetter: string = this.plugboard.scramble(letter);
+    let outputLetter: string = this._plugboard.scramble(letter);
 
     // The rotors will move accordingly providing additional scrambling (from right to left)
-    outputLetter = this.rotors.scramble(outputLetter, true);
+    outputLetter = this._rotors.scramble(outputLetter, true);
 
     // The reflector returns the wired letter
-    outputLetter = this.reflector.scramble(outputLetter);
+    outputLetter = this._reflector.scramble(outputLetter);
 
     // The rotors will move accordingly providing additional scrambling (from left to right)
-    outputLetter = this.rotors.scramble(outputLetter, false);
+    outputLetter = this._rotors.scramble(outputLetter, false);
 
     // The plugboard scrambles the letter again if the letter socket is connected to another letter socket
-    outputLetter = this.plugboard.scramble(outputLetter);
+    outputLetter = this._plugboard.scramble(outputLetter);
 
     // The output letter would light up on the board
     return outputLetter;
   }
 
   configure(settings: SettingsInterface): void {
-    this.plugboard.configure(settings.plugboard);
-    this.rotors.configure(settings.rotors);
-    this.reflector.configure(settings.reflector);
+    this._plugboard.configure(settings.plugboard);
+    this._rotors.configure(settings.rotors);
+    this._reflector.configure(settings.reflector);
   }
 
   cypher(word: string): string {
@@ -64,7 +64,7 @@ export class Enigma implements EnigmaInterface {
       // Allow any character from "a" to "z", case insensitive and white space
       if (!/^[a-z ]+$/i.test(char)) {
         const errorMessage: string = `Invalid character "${char}" found in position "${index}"`;
-        this.logger.error(errorMessage);
+        this._logger.error(errorMessage);
         throw new Error(errorMessage);
       } else if (char === " ") {
         outputWord += char;
@@ -73,7 +73,7 @@ export class Enigma implements EnigmaInterface {
       }
     });
 
-    this.logger.info(`Word "${word}" cyphered into "${outputWord}"`);
+    this._logger.info(`Word "${word}" cyphered into "${outputWord}"`);
     return outputWord;
   }
 }

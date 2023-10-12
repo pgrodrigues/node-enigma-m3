@@ -1,15 +1,11 @@
-import { LoggerInterface } from "logger";
+import { LoggerInterface } from "./logger";
+import { Rotor, RotorInterface } from "./rotor";
+import { Utils } from "./utils";
 
 type AvailableRotor = {
   ring: string;
   turnover: string[];
   type: string;
-};
-
-type SelectedRotor = AvailableRotor & {
-  offset: string;
-  position: string;
-  stepCount: number;
 };
 
 export interface RotorSettingsInterface {
@@ -35,85 +31,24 @@ export class Rotors implements RotorsInterface {
     { ring: "FKQHTLXOCBJSPDZRAMEWNIUYGV", turnover: ["A", "N"], type: "VIII" }
   ];
 
-  private logger: LoggerInterface;
+  private _logger: LoggerInterface;
 
-  private rotors: SelectedRotor[] = [];
+  private _rotors: RotorInterface[] = [];
 
   constructor(logger: LoggerInterface) {
-    this.logger = logger;
-  }
-
-  private applyOffsetToLetter(letter: string, offset: number): string {
-    let index: number = this.getLetterIndex(letter);
-    index += 26;
-    index += offset;
-    index %= 26;
-
-    return this.getLetterFromIndex(index);
-  }
-
-  private getLetterFromIndex(index: number): string {
-    return String.fromCharCode(65 + index);
-  }
-
-  private getLetterIndex(letter: string): number {
-    return letter.charCodeAt(0) - 65;
-  }
-
-  private performScrambling(index: number, letter: string, rightToLeft: boolean): string {
-    const rotor: SelectedRotor = this.rotors[index];
-
-    let outputLetter: string = this.applyOffsetToLetter(
-      letter,
-      this.getLetterIndex(rotor.position)
-    );
-
-    const entryContactLetter: string = this.applyOffsetToLetter(
-      outputLetter,
-      -this.getLetterIndex(rotor.offset)
-    );
-
-    if (rightToLeft) {
-      outputLetter = rotor.ring.charAt(this.getLetterIndex(entryContactLetter));
-    } else {
-      outputLetter = this.getLetterFromIndex(rotor.ring.indexOf(entryContactLetter));
-    }
-
-    const exitContactLetter: string = this.applyOffsetToLetter(
-      outputLetter,
-      this.getLetterIndex(rotor.offset)
-    );
-
-    outputLetter = this.applyOffsetToLetter(
-      exitContactLetter,
-      -this.getLetterIndex(rotor.position)
-    );
-
-    this.logger.info(
-      `[Rotor ${rotor.type}] ${letter} => [ ${entryContactLetter} => ${exitContactLetter} ] => ${outputLetter}`
-    );
-    return outputLetter;
-  }
-
-  private performStepping(index: number): void {
-    this.rotors[index].position = this.applyOffsetToLetter(this.rotors[index].position, 1);
-    this.rotors[index].stepCount += 1;
-
-    this.logger.info(
-      `[Rotor ${this.rotors[index].type}] position is now ${this.rotors[index].position}`
-    );
+    this._logger = logger;
   }
 
   configure(rotorsSettings: RotorSettingsInterface[]): void {
     if (!rotorsSettings) {
       const errorMessage: string = "Rotors settings are missing";
-      this.logger.error(errorMessage);
+      this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     if (!Array.isArray(rotorsSettings)) {
       const errorMessage: string = "Rotors settings must be an array";
-      this.logger.error(errorMessage);
+      this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
@@ -128,12 +63,12 @@ export class Rotors implements RotorsInterface {
     ) {
       const errorMessage: string =
         "Rotors settings must include the ring offset, position and type of the three rotors";
-      this.logger.error(errorMessage);
+      this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     // Define the rotors
-    const rotors: SelectedRotor[] = [];
+    const rotors: RotorInterface[] = [];
     rotorsSettings.forEach((rs) => {
       const rotor = this.AVAILABLE_ROTORS.find((availableRotor) => availableRotor.type === rs.type);
       let offset: string;
@@ -141,46 +76,48 @@ export class Rotors implements RotorsInterface {
 
       if (!rotor) {
         const errorMessage: string = `Invalid rotor type: ${rs.type}`;
-        this.logger.error(errorMessage);
+        this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
       if (rotors.some((r) => r.type === rs.type)) {
         const errorMessage: string = `There can't be multiple rotors of the same type: ${rs.type}`;
-        this.logger.error(errorMessage);
+        this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
       if (typeof rs.position === "string" && /^[A-Z]$/.test(rs.position)) {
         position = rs.position;
       } else if (typeof rs.position === "number" && rs.position > 0 && rs.position < 27) {
-        position = this.getLetterFromIndex(rs.position - 1);
+        position = Utils.getLetterFromIndex(rs.position - 1);
       } else {
         const errorMessage: string = "Invalid rotor position";
-        this.logger.error(errorMessage);
+        this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
       if (typeof rs.offset === "string" && /^[A-Z]$/.test(rs.offset)) {
         offset = rs.offset;
       } else if (typeof rs.offset === "number" && rs.offset > 0 && rs.offset < 27) {
-        offset = this.getLetterFromIndex(rs.offset - 1);
+        offset = Utils.getLetterFromIndex(rs.offset - 1);
       } else {
         const errorMessage: string = "Invalid rotor ring offset";
-        this.logger.error(errorMessage);
+        this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
-      rotors.push({ ...rotor, offset, position, stepCount: 0 });
+      rotors.push(
+        new Rotor(offset, position, rotor.ring, rotor.turnover, rotor.type, this._logger)
+      );
     });
 
-    this.rotors = [...rotors].reverse();
+    this._rotors = [...rotors].reverse();
   }
 
   scramble(letter: string, rightToLeft: boolean): string {
     let outputLetter: string = letter;
-    this.logger.info(
-      `[${this.rotors[0].position}] [${this.rotors[1].position}] [${this.rotors[2].position}]`
+    this._logger.info(
+      `Current positions: [${this._rotors[2].position}] [${this._rotors[1].position}] [${this._rotors[0].position}]`
     );
 
     if (rightToLeft) {
@@ -188,39 +125,41 @@ export class Rotors implements RotorsInterface {
       let midStepped: boolean = false;
 
       // Always rotate the rightmost rotor
-      this.performStepping(0);
+      this._rotors[0].step();
 
       // Check for turnover of the rightmost rotor
-      if (this.rotors[0].turnover.includes(this.rotors[0].position)) {
-        this.logger.info(`[Rotor ${this.rotors[0].type}] turnover position`);
-        this.performStepping(1);
+      if (this._rotors[0].turnover.includes(this._rotors[0].position)) {
+        this._logger.info(`[Rotor ${this._rotors[0].type}] turnover position`);
+        this._rotors[1].step();
         midStepped = true;
       }
 
       // Check for turnover of the middle rotor
-      if (this.rotors[1].turnover.includes(this.applyOffsetToLetter(this.rotors[1].position, 1))) {
-        if (this.rotors[1].stepCount % 26 === 0) {
-          this.logger.info(`[Rotor ${this.rotors[1].type}] turnover position`);
-          this.performStepping(1);
-          this.performStepping(2);
+      if (
+        this._rotors[1].turnover.includes(Utils.applyOffsetToLetter(this._rotors[1].position, 1))
+      ) {
+        if (this._rotors[1].stepCount % 26 === 0) {
+          this._logger.info(`[Rotor ${this._rotors[1].type}] turnover position`);
+          this._rotors[1].step();
+          this._rotors[2].step();
         } else if (
           // Check for double stepping of the middle rotor
           !midStepped
         ) {
-          this.performStepping(2);
-          if (this.rotors[2].turnover.includes(this.rotors[2].position)) {
-            this.performStepping(1);
+          this._rotors[2].step();
+          if (this._rotors[2].turnover.includes(this._rotors[2].position)) {
+            this._rotors[1].step();
           }
         }
       }
 
-      outputLetter = this.performScrambling(0, outputLetter, rightToLeft);
-      outputLetter = this.performScrambling(1, outputLetter, rightToLeft);
-      outputLetter = this.performScrambling(2, outputLetter, rightToLeft);
+      outputLetter = this._rotors[0].scramble(outputLetter, rightToLeft);
+      outputLetter = this._rotors[1].scramble(outputLetter, rightToLeft);
+      outputLetter = this._rotors[2].scramble(outputLetter, rightToLeft);
     } else {
-      outputLetter = this.performScrambling(2, outputLetter, rightToLeft);
-      outputLetter = this.performScrambling(1, outputLetter, rightToLeft);
-      outputLetter = this.performScrambling(0, outputLetter, rightToLeft);
+      outputLetter = this._rotors[2].scramble(outputLetter, rightToLeft);
+      outputLetter = this._rotors[1].scramble(outputLetter, rightToLeft);
+      outputLetter = this._rotors[0].scramble(outputLetter, rightToLeft);
     }
 
     return outputLetter;

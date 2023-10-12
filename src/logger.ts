@@ -4,20 +4,20 @@ export interface LoggerInterface {
 }
 
 export class Logger implements LoggerInterface {
-  private enabled: boolean;
+  private _enabled: boolean;
 
   constructor(shouldLog: boolean) {
-    this.enabled = shouldLog;
+    this._enabled = shouldLog;
   }
 
   error(message: string): void {
-    if (this.enabled) {
+    if (this._enabled) {
       console.error(message);
     }
   }
 
   info(message: string): void {
-    if (this.enabled) {
+    if (this._enabled) {
       console.info(message);
     }
   }
