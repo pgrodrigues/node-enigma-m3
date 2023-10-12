@@ -49,7 +49,7 @@ Import Enigma class:
 ```ts
 import { Enigma, EnigmaInterface, SettingsInterface } from "node-enigma-m3";
 
-const enigma: EnigmaInterface = new Enigma(false); // Instatiate with true to enable logging
+const enigma: EnigmaInterface = new Enigma(false); // Instantiate with true to enable logging
 const message: string = "MY MESSAGE";
 const settings: SettingsInterface = {
   plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
@@ -92,7 +92,7 @@ The unit tests are available in the `__tests__` folder. In order to run the test
 npm test
 ```
 
-Besides unit tests, original cyphered messages from that period [3] were also included in `__tests__/cypher.test.ts`.
+Besides unit tests, original cyphered messages from that period [3] were also included in `__tests__/messages.test.ts`.
 
 ### Enigma Instruction Manual, 1930
 
