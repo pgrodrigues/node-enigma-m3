@@ -12,7 +12,7 @@ describe("Reflector", () => {
     jest.clearAllMocks();
   });
 
-  describe("Configuring", () => {
+  describe("configure", () => {
     test("Should throw an error when configuring a reflector without settings", () => {
       const logger = new Logger(false);
       const reflector = new Reflector(logger);
@@ -41,7 +41,7 @@ describe("Reflector", () => {
     });
   });
 
-  describe("Scrambling", () => {
+  describe("scramble", () => {
     test("Should throw an error when trying to scramble without setting a reflector", () => {
       const logger = new Logger(false);
       const reflector = new Reflector(logger);

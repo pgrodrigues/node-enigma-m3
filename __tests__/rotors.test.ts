@@ -12,7 +12,7 @@ describe("Rotors", () => {
     jest.clearAllMocks();
   });
 
-  describe("Configuring", () => {
+  describe("configure", () => {
     test("Should throw an error when configuring the rotors without settings", () => {
       const logger = new Logger(false);
       const rotors = new Rotors(logger);
@@ -156,6 +156,7 @@ describe("Rotors", () => {
         ])
       ).toThrowError(new Error("Invalid rotor position"));
     });
+
     test("Should throw an error when configuring the ring offset of a rotor with an invalid letter", () => {
       const logger = new Logger(false);
       const rotors = new Rotors(logger);
@@ -206,6 +207,34 @@ describe("Rotors", () => {
           { offset: 1, position: 1, type: "III" }
         ])
       ).not.toThrowError();
+    });
+  });
+
+  describe("scramble", () => {
+    test("Should perform the scrambling of a letter from right to left", () => {
+      const logger = new Logger(false);
+      const rotors = new Rotors(logger);
+
+      rotors.configure([
+        { offset: "A", position: "A", type: "I" },
+        { offset: "A", position: "A", type: "II" },
+        { offset: "A", position: "A", type: "III" }
+      ]);
+
+      expect(rotors.scramble("A", true)).toEqual("F");
+    });
+
+    test("Should perform the scrambling of a letter from left to right", () => {
+      const logger = new Logger(false);
+      const rotors = new Rotors(logger);
+
+      rotors.configure([
+        { offset: "A", position: "A", type: "I" },
+        { offset: "A", position: "A", type: "II" },
+        { offset: "A", position: "A", type: "III" }
+      ]);
+
+      expect(rotors.scramble("A", false)).toEqual("D");
     });
   });
 });

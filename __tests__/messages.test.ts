@@ -1,63 +1,41 @@
 import { Enigma } from "../src/enigma";
 
-describe("Cypher", () => {
-  describe("Basic", () => {
-    test("Should throw an error when cyphering an invalid character", () => {
-      const enigma = new Enigma();
-      const character = "Ç";
-      const settings = {
-        plugboard: [],
-        reflector: "B",
-        rotors: [
-          { offset: "A", position: "A", type: "I" },
-          { offset: "A", position: "A", type: "II" },
-          { offset: "A", position: "A", type: "III" }
-        ]
-      };
+describe("Messages", () => {
+  test("Should preserve white spaces", () => {
+    const enigma = new Enigma();
+    const word = "A B";
+    const settings = {
+      plugboard: [],
+      reflector: "B",
+      rotors: [
+        { offset: "A", position: "A", type: "I" },
+        { offset: "A", position: "A", type: "II" },
+        { offset: "A", position: "A", type: "III" }
+      ]
+    };
 
-      enigma.configure(settings);
+    enigma.configure(settings);
 
-      expect(() => enigma.cypher(character)).toThrowError(
-        new Error(`Invalid character "${character}" found in position "0"`)
-      );
-    });
+    expect(enigma.cypher(word).indexOf(" ")).toEqual(word.indexOf(" "));
+  });
 
-    test("Should preserve white spaces", () => {
-      const enigma = new Enigma();
-      const word = "A B";
-      const settings = {
-        plugboard: [],
-        reflector: "B",
-        rotors: [
-          { offset: "A", position: "A", type: "I" },
-          { offset: "A", position: "A", type: "II" },
-          { offset: "A", position: "A", type: "III" }
-        ]
-      };
+  test("Should correctly cypher a message with a configuration that involves double stepping (ZPV, ZQW, ARX)", () => {
+    const enigma = new Enigma();
+    const input = "AAAA AAAA AAAA AAAA";
+    const output = "XMFI DRGB UYZK XVIM";
+    const settings = {
+      plugboard: [],
+      reflector: "B",
+      rotors: [
+        { offset: "A", position: "Z", type: "V" },
+        { offset: "A", position: "P", type: "I" },
+        { offset: "A", position: "K", type: "III" }
+      ]
+    };
 
-      enigma.configure(settings);
+    enigma.configure(settings);
 
-      expect(enigma.cypher(word).indexOf(" ")).toEqual(word.indexOf(" "));
-    });
-
-    test("Should correctly cypher a message with a configuration that involves double stepping (ZPV, ZQW, ARX)", () => {
-      const enigma = new Enigma();
-      const input = "AAAA AAAA AAAA AAAA";
-      const output = "XMFI DRGB UYZK XVIM";
-      const settings = {
-        plugboard: [],
-        reflector: "B",
-        rotors: [
-          { offset: "A", position: "Z", type: "V" },
-          { offset: "A", position: "P", type: "I" },
-          { offset: "A", position: "K", type: "III" }
-        ]
-      };
-
-      enigma.configure(settings);
-
-      expect(enigma.cypher(input)).toBe(output);
-    });
+    expect(enigma.cypher(input)).toBe(output);
   });
 
   describe("Original messages", () => {

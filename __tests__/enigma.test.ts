@@ -18,7 +18,7 @@ describe("Enigma", () => {
     jest.clearAllMocks();
   });
 
-  describe("Configuring", () => {
+  describe("configure", () => {
     test("Should initialize the plugboard, reflector and rotors during initialization stage", () => {
       new Enigma();
 
@@ -54,6 +54,28 @@ describe("Enigma", () => {
       expect(plugboardSpy).toHaveBeenCalledWith(settings.plugboard);
       expect(reflectorSpy).toHaveBeenCalledWith(settings.reflector);
       expect(rotorsSpy).toHaveBeenCalledWith(settings.rotors);
+    });
+  });
+
+  describe("cypher", () => {
+    test("Should throw an error when cyphering an invalid character", () => {
+      const enigma = new Enigma();
+      const character = "Ç";
+      const settings = {
+        plugboard: [],
+        reflector: "B",
+        rotors: [
+          { offset: "A", position: "A", type: "I" },
+          { offset: "A", position: "A", type: "II" },
+          { offset: "A", position: "A", type: "III" }
+        ]
+      };
+
+      enigma.configure(settings);
+
+      expect(() => enigma.cypher(character)).toThrowError(
+        new Error(`Invalid character "${character}" found in position "0"`)
+      );
     });
   });
 });

@@ -12,7 +12,7 @@ describe("Plugboard", () => {
     jest.clearAllMocks();
   });
 
-  describe("Configuring", () => {
+  describe("configure", () => {
     test("Should throw an error when configuring the plugboard without settings", () => {
       const logger = new Logger(false);
       const plugboard = new Plugboard(logger);
@@ -66,7 +66,7 @@ describe("Plugboard", () => {
     });
   });
 
-  describe("Scrambling", () => {
+  describe("scramble", () => {
     test("Should return the same letter when configured without pairs", () => {
       const logger = new Logger(false);
       const plugboard = new Plugboard(logger);
