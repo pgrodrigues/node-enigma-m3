@@ -211,6 +211,13 @@ describe("Rotors", () => {
   });
 
   describe("scramble", () => {
+    test("Should throw an error when trying to scramble without setting the rotors", () => {
+      const logger = new Logger(false);
+      const rotors = new Rotors(logger);
+
+      expect(() => rotors.scramble("A", true)).toThrowError(new Error("Rotors not configured"));
+    });
+
     test("Should perform the scrambling of a letter from right to left", () => {
       const logger = new Logger(false);
       const rotors = new Rotors(logger);

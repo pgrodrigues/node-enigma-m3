@@ -2,23 +2,39 @@ import { LoggerInterface } from "./logger";
 import { Rotor, RotorInterface } from "./rotor";
 import { Utils } from "./utils";
 
-type AvailableRotor = {
+/**
+ * Interface representing the default properties of a rotor for the Enigma machine.
+ * @interface
+ */
+export type AvailableRotor = {
   ring: string;
   turnover: string[];
   type: string;
 };
 
+/**
+ * Interface for rotor settings, representing the configuration of a rotor.
+ * @interface
+ */
 export interface RotorSettingsInterface {
   offset: string | number;
   position: string | number;
   type: string;
 }
 
+/**
+ * Interface for rotors, representing their properties and methods.
+ * @interface
+ */
 export interface RotorsInterface {
   configure(rotorSettings: RotorSettingsInterface[]): void;
   scramble(letter: string, rightToLeft: boolean): string;
 }
 
+/**
+ * Class representing the rotor assembly in the Enigma machine.
+ * @class
+ */
 export class Rotors implements RotorsInterface {
   private readonly AVAILABLE_ROTORS: AvailableRotor[] = [
     { ring: "EKMFLGDQVZNTOWYHXUSPAIBRCJ", turnover: ["R"], type: "I" },
@@ -35,10 +51,21 @@ export class Rotors implements RotorsInterface {
 
   private _rotors: RotorInterface[] = [];
 
+  /**
+   * Creates a new Rotors instance with the specified logger.
+   *
+   * @param {LoggerInterface} logger - The logger instance for logging rotor operations.
+   */
   constructor(logger: LoggerInterface) {
     this._logger = logger;
   }
 
+  /**
+   * Validates and configures the rotor settings for the Enigma machine.
+   *
+   * @param {RotorSettingsInterface[]} rotorsSettings - An array of rotor settings.
+   * @throws {Error} If the rotors settings do not allow to correctly configure the rotors.
+   */
   configure(rotorsSettings: RotorSettingsInterface[]): void {
     if (!rotorsSettings) {
       const errorMessage: string = "Rotors settings are missing";
@@ -114,7 +141,21 @@ export class Rotors implements RotorsInterface {
     this._rotors = [...rotors].reverse();
   }
 
+  /**
+   * Scrambles an input letter using the configured rotors.
+   *
+   * @param {string} letter - The input letter to be scrambled.
+   * @param {boolean} rightToLeft - If `true`, the scrambling is done from right to left; if `false`, from left to right.
+   * @returns {string} The scrambled output letter.
+   * @throws {Error} If the rotors are not correctly configured.
+   */
   scramble(letter: string, rightToLeft: boolean): string {
+    if (this._rotors.length === 0) {
+      const errorMessage: string = "Rotors not configured";
+      this._logger.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
     let outputLetter: string = letter;
     this._logger.info(
       `Current positions: [${this._rotors[2].position}] [${this._rotors[1].position}] [${this._rotors[0].position}]`

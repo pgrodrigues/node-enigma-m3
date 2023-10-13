@@ -1,15 +1,27 @@
 import { LoggerInterface } from "./logger";
 
-type AvailableReflector = {
+/**
+ * Interface representing the configuration of a reflector for the Enigma machine.
+ * @interface
+ */
+export type AvailableReflector = {
   pairs: string[];
   type: string;
 };
 
+/**
+ * Interface for a reflector that can configure its type and scramble input letters.
+ * @interface
+ */
 export interface ReflectorInterface {
   configure(type: string): void;
   scramble(letter: string): string;
 }
 
+/**
+ * Class representing a reflector for configuring reflector types and scrambling input letters.
+ * @class
+ */
 export class Reflector implements ReflectorInterface {
   private readonly AVAILABLE_REFLECTORS: AvailableReflector[] = [
     {
@@ -38,10 +50,21 @@ export class Reflector implements ReflectorInterface {
 
   private _reflector: AvailableReflector | undefined;
 
+  /**
+   * Creates a new Reflector instance with the specified logger.
+   *
+   * @param {LoggerInterface} logger - A logger for error and information messages.
+   */
   constructor(logger: LoggerInterface) {
     this._logger = logger;
   }
 
+  /**
+   * Validates and configures the reflector settings for the Enigma machine.
+   *
+   * @param {string} type - The type of reflector to be configured.
+   * @throws {Error} If the settings do not allow to correctly configure the reflector.
+   */
   configure(type: string): void {
     if (!type) {
       const errorMessage: string = "Reflector settings are missing";
@@ -62,6 +85,13 @@ export class Reflector implements ReflectorInterface {
     this._reflector = reflectorFound;
   }
 
+  /**
+   * Scrambles an input letter using the configured reflector.
+   *
+   * @param {string} letter - The input letter to be scrambled.
+   * @returns {string} The scrambled output letter.
+   * @throws {Error} If the reflector is not correctly configured.
+   */
   scramble(letter: string): string {
     if (!this._reflector) {
       const errorMessage: string = "Reflector not configured";

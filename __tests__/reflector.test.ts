@@ -42,7 +42,7 @@ describe("Reflector", () => {
   });
 
   describe("scramble", () => {
-    test("Should throw an error when trying to scramble without setting a reflector", () => {
+    test("Should throw an error when trying to scramble without setting the reflector", () => {
       const logger = new Logger(false);
       const reflector = new Reflector(logger);
 

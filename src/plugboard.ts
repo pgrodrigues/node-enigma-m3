@@ -1,19 +1,38 @@
 import { LoggerInterface } from "./logger";
 
+/**
+ * Interface for a plugboard that can configure pairs of letters and scramble input letters.
+ * @interface
+ */
 export interface PlugboardInterface {
   configure(pairs: string[]): void;
   scramble(letter: string): string;
 }
 
+/**
+ * Class representing a plugboard for configuring letter pairs and scrambling input letters.
+ * @class
+ */
 export class Plugboard implements PlugboardInterface {
   private _logger: LoggerInterface;
 
   private _pairs: string[] = [];
 
+  /**
+   * Creates a new Plugboard instance with the specified logger.
+   *
+   * @param {LoggerInterface} logger - A logger for error and information messages.
+   */
   constructor(logger: LoggerInterface) {
     this._logger = logger;
   }
 
+  /**
+   * Validates and configures the plugboard settings for the Enigma machine.
+   *
+   * @param {string[]} pairs - An array of letter pairs, where each pair consists of two letters.
+   * @throws {Error} If the settings do not allow to correctly configure the plugboard.
+   */
   configure(pairs: string[]): void {
     if (!pairs) {
       const errorMessage: string = "Plugboard settings are missing";
@@ -43,8 +62,16 @@ export class Plugboard implements PlugboardInterface {
     this._pairs = [...pairs];
   }
 
+  /**
+   * Scrambles an input letter using the configured plugboard.
+   *
+   * @param {string} letter - The input letter to be scrambled.
+   * @returns {string} The scrambled output letter.
+   */
   scramble(letter: string): string {
     let outputLetter: string = letter;
+
+    // When no plugboard pairs are connected, return the input letter
 
     for (const pair of this._pairs) {
       if (pair[0] === letter) {

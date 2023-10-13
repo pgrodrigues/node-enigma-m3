@@ -84,6 +84,14 @@ npm run build
 
 The build will be available in the `dist` folder.
 
+Generate the documentation:
+
+```bash
+npm run docs
+```
+
+The documentation will be available in the `docs` folder.
+
 ## Testing
 
 The unit tests are available in the `__tests__` folder. In order to run the tests:

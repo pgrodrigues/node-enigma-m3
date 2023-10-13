@@ -3,7 +3,7 @@ import { Enigma } from "../src/enigma";
 describe("Messages", () => {
   test("Should preserve white spaces", () => {
     const enigma = new Enigma();
-    const word = "A B";
+    const input = "A B";
     const settings = {
       plugboard: [],
       reflector: "B",
@@ -16,20 +16,20 @@ describe("Messages", () => {
 
     enigma.configure(settings);
 
-    expect(enigma.cypher(word).indexOf(" ")).toEqual(word.indexOf(" "));
+    expect(enigma.cypher(input).indexOf(" ")).toEqual(input.indexOf(" "));
   });
 
   test("Should correctly cypher a message with a configuration that involves double stepping (ZPV, ZQW, ARX)", () => {
     const enigma = new Enigma();
-    const input = "AAAA AAAA AAAA AAAA";
-    const output = "XMFI DRGB UYZK XVIM";
+    const input = "AAAAA";
+    const output = "KXVIM";
     const settings = {
       plugboard: [],
       reflector: "B",
       rotors: [
         { offset: "A", position: "Z", type: "V" },
         { offset: "A", position: "P", type: "I" },
-        { offset: "A", position: "K", type: "III" }
+        { offset: "A", position: "V", type: "III" }
       ]
     };
 

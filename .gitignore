@@ -6,6 +6,7 @@
 # misc
 /coverage
 /dist
+/docs
 .DS_Store
 .env*
 npm-debug.log*
