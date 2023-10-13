@@ -73,7 +73,7 @@ describe("Plugboard", () => {
 
       plugboard.configure([]);
 
-      expect(plugboard.scramble("A")).toEqual("A");
+      expect(plugboard.scramble("A")).toBe("A");
     });
 
     test("Should return the second letter of the pair for a given first letter", () => {
@@ -82,7 +82,7 @@ describe("Plugboard", () => {
 
       plugboard.configure(["AB", "CD"]);
 
-      expect(plugboard.scramble("A")).toEqual("B");
+      expect(plugboard.scramble("A")).toBe("B");
     });
 
     test("Should return the first letter of the pair for a given second letter", () => {
@@ -91,7 +91,7 @@ describe("Plugboard", () => {
 
       plugboard.configure(["AB", "CD"]);
 
-      expect(plugboard.scramble("B")).toEqual("A");
+      expect(plugboard.scramble("B")).toBe("A");
     });
   });
 });

@@ -55,7 +55,7 @@ describe("Reflector", () => {
 
       reflector.configure("B");
 
-      expect(reflector.scramble("A")).toEqual("Y");
+      expect(reflector.scramble("A")).toBe("Y");
     });
 
     test("Should return the first letter of the pair for a given second letter", () => {
@@ -64,7 +64,7 @@ describe("Reflector", () => {
 
       reflector.configure("B");
 
-      expect(reflector.scramble("Y")).toEqual("A");
+      expect(reflector.scramble("Y")).toBe("A");
     });
   });
 });

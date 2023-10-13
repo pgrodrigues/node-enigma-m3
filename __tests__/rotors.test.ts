@@ -228,7 +228,7 @@ describe("Rotors", () => {
         { offset: "A", position: "A", type: "III" }
       ]);
 
-      expect(rotors.scramble("A", true)).toEqual("F");
+      expect(rotors.scramble("A", true)).toBe("F");
     });
 
     test("Should perform the scrambling of a letter from left to right", () => {
@@ -241,7 +241,7 @@ describe("Rotors", () => {
         { offset: "A", position: "A", type: "III" }
       ]);
 
-      expect(rotors.scramble("A", false)).toEqual("D");
+      expect(rotors.scramble("A", false)).toBe("D");
     });
   });
 });

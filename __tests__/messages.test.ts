@@ -16,7 +16,7 @@ describe("Messages", () => {
 
     enigma.configure(settings);
 
-    expect(enigma.cypher(input).indexOf(" ")).toEqual(input.indexOf(" "));
+    expect(enigma.cypher(input).indexOf(" ")).toBe(input.indexOf(" "));
   });
 
   test("Should correctly cypher a message with a configuration that involves double stepping (ZPV, ZQW, ARX)", () => {
