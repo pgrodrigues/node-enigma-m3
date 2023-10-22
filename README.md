@@ -55,7 +55,9 @@ const settings: SettingsInterface = {
   plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
   reflector: "B", // Reflector types: "A", "B", "C", "B Thin", "C Thin"
   rotors: [
-    // Offset and Position: "A" to "Z" or 1 to 26. Rotor types: "I", "II", "III", "IV", "V", "VI", "VII", "VIII"
+    // Rotors are defined from left to right
+    // Offset and Position: "A" to "Z" or 1 to 26
+    // Types: "I", "II", "III", "IV", "V", "VI", "VII", "VIII"
     { offset: "A", position: "A", type: "III" },
     { offset: "A", position: "A", type: "II" },
     { offset: "A", position: "A", type: "I" }

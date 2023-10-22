@@ -72,7 +72,7 @@ export class Reflector implements ReflectorInterface {
       throw new Error(errorMessage);
     }
 
-    const reflectorFound = this.AVAILABLE_REFLECTORS.find(
+    const reflectorFound: AvailableReflector | undefined = this.AVAILABLE_REFLECTORS.find(
       (availableReflector) => availableReflector.type === type
     );
 

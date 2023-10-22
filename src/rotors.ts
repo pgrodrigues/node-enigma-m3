@@ -97,7 +97,9 @@ export class Rotors implements RotorsInterface {
     // Define the rotors
     const rotors: RotorInterface[] = [];
     rotorsSettings.forEach((rs) => {
-      const rotor = this.AVAILABLE_ROTORS.find((availableRotor) => availableRotor.type === rs.type);
+      const rotor: AvailableRotor | undefined = this.AVAILABLE_ROTORS.find(
+        (availableRotor) => availableRotor.type === rs.type
+      );
       let offset: string;
       let position: string;
 

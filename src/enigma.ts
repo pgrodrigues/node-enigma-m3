@@ -64,13 +64,13 @@ export class Enigma implements EnigmaInterface {
     // The reflector returns the wired letter
     outputLetter = this._reflector.scramble(outputLetter);
 
-    // The rotors will move accordingly providing additional scrambling (from left to right)
+    // The signal will go through the rotors once again providing additional scrambling (from left to right)
     outputLetter = this._rotors.scramble(outputLetter, false);
 
     // The plugboard scrambles the letter again if the letter socket is connected to another letter socket
     outputLetter = this._plugboard.scramble(outputLetter);
 
-    // The output letter would light up on the board
+    // The output letter lights up on the board
     return outputLetter;
   }
 
