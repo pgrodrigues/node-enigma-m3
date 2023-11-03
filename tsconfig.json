@@ -5,8 +5,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
-    "noImplicitAny": true,
-    "noImplicitThis": true,
     "outDir": "dist",
     "paths": {
       "*": ["src/*"]
@@ -14,10 +12,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "strictNullChecks": true,
     "target": "esnext"
   },
-  "exclude": ["node_modules", "coverage", "dist", "docs"],
   "include": ["src/**/*.ts"],
   "typedocOptions": {
     "entryPoints": ["src/**/*.ts"],
