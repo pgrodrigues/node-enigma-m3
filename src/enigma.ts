@@ -100,7 +100,7 @@ export class Enigma implements EnigmaInterface {
     [...word.trim()].forEach((char, index) => {
       // Allow any character from "a" to "z", case insensitive and white space
       if (!/^[a-z ]+$/i.test(char)) {
-        const errorMessage: string = `Invalid character "${char}" found in position "${index}"`;
+        const errorMessage = `Invalid character "${char}" found in position "${index}"`;
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       } else if (char === " ") {

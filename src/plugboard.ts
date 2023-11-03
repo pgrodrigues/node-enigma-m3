@@ -35,25 +35,25 @@ export class Plugboard implements PlugboardInterface {
    */
   configure(pairs: string[]): void {
     if (!pairs) {
-      const errorMessage: string = "Plugboard settings are missing";
+      const errorMessage = "Plugboard settings are missing";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     if (!Array.isArray(pairs)) {
-      const errorMessage: string = "Plugboard pairs must be an array";
+      const errorMessage = "Plugboard pairs must be an array";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     if (pairs.length > 0) {
       if (pairs.some((p) => p.length !== 2)) {
-        const errorMessage: string = "Each plugboard pair must consist of exactly two letters";
+        const errorMessage = "Each plugboard pair must consist of exactly two letters";
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
       if (!/^(?:(.)(?!.*?\1))+$/.test(pairs.join(""))) {
-        const errorMessage: string = "Plugboard pairs must not contain duplicate letters";
+        const errorMessage = "Plugboard pairs must not contain duplicate letters";
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }

@@ -68,13 +68,13 @@ export class Rotors implements RotorsInterface {
    */
   configure(rotorsSettings: RotorSettingsInterface[]): void {
     if (!rotorsSettings) {
-      const errorMessage: string = "Rotors settings are missing";
+      const errorMessage = "Rotors settings are missing";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
 
     if (!Array.isArray(rotorsSettings)) {
-      const errorMessage: string = "Rotors settings must be an array";
+      const errorMessage = "Rotors settings must be an array";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
@@ -88,7 +88,7 @@ export class Rotors implements RotorsInterface {
           Object.prototype.hasOwnProperty.call(s, "type")
       )
     ) {
-      const errorMessage: string =
+      const errorMessage =
         "Rotors settings must include the ring offset, position and type of the three rotors";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
@@ -104,13 +104,13 @@ export class Rotors implements RotorsInterface {
       let position: string;
 
       if (!rotor) {
-        const errorMessage: string = `Invalid rotor type: ${rs.type}`;
+        const errorMessage = `Invalid rotor type: ${rs.type}`;
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
 
       if (rotors.some((r) => r.type === rs.type)) {
-        const errorMessage: string = `There can't be multiple rotors of the same type: ${rs.type}`;
+        const errorMessage = `There can't be multiple rotors of the same type: ${rs.type}`;
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
@@ -120,7 +120,7 @@ export class Rotors implements RotorsInterface {
       } else if (typeof rs.position === "number" && rs.position > 0 && rs.position < 27) {
         position = Utils.getLetterFromIndex(rs.position - 1);
       } else {
-        const errorMessage: string = "Invalid rotor position";
+        const errorMessage = "Invalid rotor position";
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
@@ -130,7 +130,7 @@ export class Rotors implements RotorsInterface {
       } else if (typeof rs.offset === "number" && rs.offset > 0 && rs.offset < 27) {
         offset = Utils.getLetterFromIndex(rs.offset - 1);
       } else {
-        const errorMessage: string = "Invalid rotor ring offset";
+        const errorMessage = "Invalid rotor ring offset";
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       }
@@ -153,7 +153,7 @@ export class Rotors implements RotorsInterface {
    */
   scramble(letter: string, rightToLeft: boolean): string {
     if (this._rotors.length === 0) {
-      const errorMessage: string = "Rotors not configured";
+      const errorMessage = "Rotors not configured";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }

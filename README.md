@@ -50,7 +50,7 @@ Import Enigma class:
 import { Enigma, EnigmaInterface, SettingsInterface } from "node-enigma-m3";
 
 const enigma: EnigmaInterface = new Enigma(false); // Instantiate with true to enable logging
-const message: string = "MY MESSAGE";
+const message = "MY MESSAGE";
 const settings: SettingsInterface = {
   plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
   reflector: "B", // Reflector types: "A", "B", "C", "B Thin", "C Thin"
@@ -65,7 +65,7 @@ const settings: SettingsInterface = {
 };
 
 enigma.configure(settings);
-const encodedMessage: string = enigma.cypher(message);
+const encodedMessage = enigma.cypher(message);
 
 console.log(`Encoded message: ${encodedMessage}`); // Encoded message: LD KLKXPWP
 ```

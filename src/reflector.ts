@@ -67,7 +67,7 @@ export class Reflector implements ReflectorInterface {
    */
   configure(type: string): void {
     if (!type) {
-      const errorMessage: string = "Reflector settings are missing";
+      const errorMessage = "Reflector settings are missing";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
@@ -77,7 +77,7 @@ export class Reflector implements ReflectorInterface {
     );
 
     if (!reflectorFound) {
-      const errorMessage: string = `Invalid reflector type: ${type}`;
+      const errorMessage = `Invalid reflector type: ${type}`;
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
@@ -94,7 +94,7 @@ export class Reflector implements ReflectorInterface {
    */
   scramble(letter: string): string {
     if (!this._reflector) {
-      const errorMessage: string = "Reflector not configured";
+      const errorMessage = "Reflector not configured";
       this._logger.error(errorMessage);
       throw new Error(errorMessage);
     }
