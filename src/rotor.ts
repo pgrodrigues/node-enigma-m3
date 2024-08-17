@@ -1,5 +1,5 @@
 import { LoggerInterface } from "./logger";
-import { Utils } from "./utils";
+import Utils from "./utils";
 
 /**
  * Interface for a rotor, representing its properties and methods.
@@ -27,7 +27,7 @@ export class Rotor implements RotorInterface {
 
   private _ring: string;
 
-  private _stepCount: number = 0;
+  private _stepCount = 0;
 
   private _turnover: string[];
 
@@ -67,12 +67,9 @@ export class Rotor implements RotorInterface {
    * @returns {string} The scrambled output letter.
    */
   scramble(letter: string, rightToLeft: boolean): string {
-    let outputLetter: string = Utils.applyOffsetToLetter(
-      letter,
-      Utils.getLetterIndex(this._position)
-    );
+    let outputLetter = Utils.applyOffsetToLetter(letter, Utils.getLetterIndex(this._position));
 
-    const entryContactLetter: string = Utils.applyOffsetToLetter(
+    const entryContactLetter = Utils.applyOffsetToLetter(
       outputLetter,
       -Utils.getLetterIndex(this._offset)
     );
@@ -83,7 +80,7 @@ export class Rotor implements RotorInterface {
       outputLetter = Utils.getLetterFromIndex(this._ring.indexOf(entryContactLetter));
     }
 
-    const exitContactLetter: string = Utils.applyOffsetToLetter(
+    const exitContactLetter = Utils.applyOffsetToLetter(
       outputLetter,
       Utils.getLetterIndex(this._offset)
     );

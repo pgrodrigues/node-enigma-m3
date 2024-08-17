@@ -4,10 +4,10 @@ import { LoggerInterface } from "./logger";
  * Interface representing the configuration of a reflector for the Enigma machine.
  * @interface
  */
-export type AvailableReflector = {
+export interface AvailableReflector {
   pairs: string[];
   type: string;
-};
+}
 
 /**
  * Interface for a reflector that can configure its type and scramble input letters.
@@ -99,17 +99,15 @@ export class Reflector implements ReflectorInterface {
       throw new Error(errorMessage);
     }
 
-    let outputLetter: string = letter;
+    let outputLetter = letter;
 
-    for (const pair of this._reflector.pairs) {
-      if (pair[0] === letter) {
-        outputLetter = pair[1];
-        break;
-      }
-      if (pair[1] === letter) {
-        outputLetter = pair[0];
-        break;
-      }
+    const pair = this._reflector.pairs.find(
+      ([first, second]) => first === letter || second === letter
+    );
+
+    if (pair) {
+      const [first, second] = pair;
+      outputLetter = first === letter ? second : first;
     }
 
     this._logger.info(`[Reflector ${this._reflector.type}] ${letter} => ${outputLetter}`);

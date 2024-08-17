@@ -20,8 +20,9 @@ describe("Enigma", () => {
 
   describe("configure", () => {
     test("Should initialize the plugboard, reflector and rotors during initialization stage", () => {
-      new Enigma();
+      const enigma = new Enigma();
 
+      expect(enigma).toBeDefined();
       expect(Logger).toHaveBeenCalledTimes(1);
       expect(Plugboard).toHaveBeenCalledTimes(1);
       expect(Reflector).toHaveBeenCalledTimes(1);

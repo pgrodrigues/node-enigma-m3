@@ -2,7 +2,7 @@
  * Utility class for Enigma machine simulation.
  * @class
  */
-export class Utils {
+export default class Utils {
   /**
    * Applies an offset to a given letter to produce a new letter.
    *
@@ -11,7 +11,7 @@ export class Utils {
    * @returns {string} The new letter after applying the offset.
    */
   static applyOffsetToLetter(letter: string, offset: number): string {
-    let index: number = this.getLetterIndex(letter);
+    let index = this.getLetterIndex(letter);
     index += 26;
     index += offset;
     index %= 26;

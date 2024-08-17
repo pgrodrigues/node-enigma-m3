@@ -1,16 +1,16 @@
 import { LoggerInterface } from "./logger";
 import { Rotor, RotorInterface } from "./rotor";
-import { Utils } from "./utils";
+import Utils from "./utils";
 
 /**
  * Interface representing the default properties of a rotor for the Enigma machine.
  * @interface
  */
-export type AvailableRotor = {
+export interface AvailableRotor {
   ring: string;
   turnover: string[];
   type: string;
-};
+}
 
 /**
  * Interface for rotor settings, representing the configuration of a rotor.
@@ -158,14 +158,14 @@ export class Rotors implements RotorsInterface {
       throw new Error(errorMessage);
     }
 
-    let outputLetter: string = letter;
+    let outputLetter = letter;
     this._logger.info(
       `Current positions: [${this._rotors[2].position}] [${this._rotors[1].position}] [${this._rotors[0].position}]`
     );
 
     if (rightToLeft) {
       // During right-to-left flow, the rotors are stepped before each letter is encrypted
-      let midStepped: boolean = false;
+      let midStepped = false;
 
       // Always rotate the rightmost rotor
       this._rotors[0].step();

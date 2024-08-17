@@ -69,19 +69,15 @@ export class Plugboard implements PlugboardInterface {
    * @returns {string} The scrambled output letter.
    */
   scramble(letter: string): string {
-    let outputLetter: string = letter;
+    let outputLetter = letter;
 
     // When no plugboard pairs are connected, return the input letter
 
-    for (const pair of this._pairs) {
-      if (pair[0] === letter) {
-        outputLetter = pair[1];
-        break;
-      }
-      if (pair[1] === letter) {
-        outputLetter = pair[0];
-        break;
-      }
+    const pair = this._pairs.find(([first, second]) => first === letter || second === letter);
+
+    if (pair) {
+      const [first, second] = pair;
+      outputLetter = first === letter ? second : first;
     }
 
     this._logger.info(`[Plugboard] ${letter} => ${outputLetter}`);

@@ -40,7 +40,7 @@ export class Enigma implements EnigmaInterface {
    *
    * @param {boolean} [shouldLog=false] - Determines if the logger should log messages.
    */
-  constructor(shouldLog: boolean = false) {
+  constructor(shouldLog = false) {
     this._logger = new Logger(shouldLog);
     this._plugboard = new Plugboard(this._logger);
     this._reflector = new Reflector(this._logger);
@@ -56,7 +56,7 @@ export class Enigma implements EnigmaInterface {
    */
   private pressLetter(letter: string): string {
     // On the plugboard, if the socket of the letter being cyphered is connected to the socket of another letter, the letter being cyphered gets that value
-    let outputLetter: string = this._plugboard.scramble(letter);
+    let outputLetter = this._plugboard.scramble(letter);
 
     // The rotors will move accordingly providing additional scrambling (from right to left)
     outputLetter = this._rotors.scramble(outputLetter, true);
@@ -94,7 +94,7 @@ export class Enigma implements EnigmaInterface {
    * @throws {Error} If an invalid character is found in the input word.
    */
   cypher(word: string): string {
-    let outputWord: string = "";
+    let outputWord = "";
 
     // Parse word and cypher letter
     [...word.trim()].forEach((char, index) => {

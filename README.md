@@ -47,9 +47,9 @@ For a message to be correctly encrypted and decrypted, both sender and receiver 
 Import Enigma class:
 
 ```ts
-import { Enigma, EnigmaInterface, SettingsInterface } from "node-enigma-m3";
+import { Enigma, SettingsInterface } from "node-enigma-m3";
 
-const enigma: EnigmaInterface = new Enigma(false); // Instantiate with true to enable logging
+const enigma = new Enigma(false); // Instantiate with true to enable logging
 const message = "MY MESSAGE";
 const settings: SettingsInterface = {
   plugboard: ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST"], // Plugboard pairs
