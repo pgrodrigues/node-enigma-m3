@@ -4,7 +4,6 @@
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended-type-checked", 
     "plugin:@typescript-eslint/stylistic-type-checked",
-    "plugin:import/typescript",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -17,5 +16,11 @@
     "no-console": ["off"],
     "no-underscore-dangle": ["off"],
     "prettier/prettier": ["error"]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": true,
+      "typescript": true
+    }
   }
 }

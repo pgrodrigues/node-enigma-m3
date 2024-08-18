@@ -4,11 +4,11 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
+    "incremental": true,
+    "isolatedModules": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "outDir": "dist",
-    "paths": {
-      "*": ["src/*"]
-    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
