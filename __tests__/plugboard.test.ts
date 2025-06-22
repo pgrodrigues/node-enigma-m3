@@ -18,7 +18,7 @@ describe("Plugboard", () => {
       const plugboard = new Plugboard(logger);
 
       // @ts-expect-error Intentional usage of a different type
-      expect(() => plugboard.configure(undefined)).toThrowError(
+      expect(() => plugboard.configure(undefined)).toThrow(
         new Error("Plugboard settings are missing")
       );
     });
@@ -28,7 +28,7 @@ describe("Plugboard", () => {
       const plugboard = new Plugboard(logger);
 
       // @ts-expect-error Intentional usage of a different type
-      expect(() => plugboard.configure("AB")).toThrowError(
+      expect(() => plugboard.configure("AB")).toThrow(
         new Error("Plugboard pairs must be an array")
       );
     });
@@ -37,7 +37,7 @@ describe("Plugboard", () => {
       const logger = new Logger(false);
       const plugboard = new Plugboard(logger);
 
-      expect(() => plugboard.configure(["AB", "C"])).toThrowError(
+      expect(() => plugboard.configure(["AB", "C"])).toThrow(
         new Error("Each plugboard pair must consist of exactly two letters")
       );
     });
@@ -46,7 +46,7 @@ describe("Plugboard", () => {
       const logger = new Logger(false);
       const plugboard = new Plugboard(logger);
 
-      expect(() => plugboard.configure(["AB", "AC"])).toThrowError(
+      expect(() => plugboard.configure(["AB", "AC"])).toThrow(
         new Error("Plugboard pairs must not contain duplicate letters")
       );
     });
@@ -55,14 +55,14 @@ describe("Plugboard", () => {
       const logger = new Logger(false);
       const plugboard = new Plugboard(logger);
 
-      expect(() => plugboard.configure([])).not.toThrowError();
+      expect(() => plugboard.configure([])).not.toThrow();
     });
 
     test("Should not throw an error when configuring the plugboard with valid pairs", () => {
       const logger = new Logger(false);
       const plugboard = new Plugboard(logger);
 
-      expect(() => plugboard.configure(["AB", "CD"])).not.toThrowError();
+      expect(() => plugboard.configure(["AB", "CD"])).not.toThrow();
     });
   });
 

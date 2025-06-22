@@ -6,9 +6,7 @@ import tsEslint from "typescript-eslint";
 import typescriptParser from "@typescript-eslint/parser";
 
 export default [
-  {
-    ignores: ["coverage", "dist", "docs", "node_modules"]
-  },
+  { ignores: ["coverage", "dist", "docs", "node_modules"] },
   {
     rules: {
       ...eslint.configs.recommended.rules,
@@ -32,17 +30,8 @@ export default [
   },
   {
     files: ["__tests__/**/*.test.ts"],
-    languageOptions: {
-      globals: { ...globals.node, ...jestPlugin.environments.globals.globals }
-    },
-    plugins: { jest: jestPlugin },
-    rules: {
-      "jest/no-disabled-tests": "warn",
-      "jest/no-focused-tests": "error",
-      "jest/no-identical-title": "error",
-      "jest/prefer-to-have-length": "warn",
-      "jest/valid-expect": "error"
-    }
+    languageOptions: { globals: { ...globals.node, ...jestPlugin.environments.globals.globals } },
+    ...jestPlugin.configs["flat/recommended"]
   },
   prettierPluginRecommended
 ];

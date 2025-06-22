@@ -18,7 +18,7 @@ describe("Reflector", () => {
       const reflector = new Reflector(logger);
 
       // @ts-expect-error Intentional usage of a different type
-      expect(() => reflector.configure(undefined)).toThrowError(
+      expect(() => reflector.configure(undefined)).toThrow(
         new Error("Reflector settings are missing")
       );
     });
@@ -28,7 +28,7 @@ describe("Reflector", () => {
       const reflector = new Reflector(logger);
       const invalidType = "invalidType";
 
-      expect(() => reflector.configure(invalidType)).toThrowError(
+      expect(() => reflector.configure(invalidType)).toThrow(
         new Error(`Invalid reflector type: ${invalidType}`)
       );
     });
@@ -37,7 +37,7 @@ describe("Reflector", () => {
       const logger = new Logger(false);
       const reflector = new Reflector(logger);
 
-      expect(() => reflector.configure("B")).not.toThrowError();
+      expect(() => reflector.configure("B")).not.toThrow();
     });
   });
 
@@ -46,7 +46,7 @@ describe("Reflector", () => {
       const logger = new Logger(false);
       const reflector = new Reflector(logger);
 
-      expect(() => reflector.scramble("A")).toThrowError(new Error("Reflector not configured"));
+      expect(() => reflector.scramble("A")).toThrow(new Error("Reflector not configured"));
     });
 
     test("Should return the second letter of the pair for a given first letter", () => {

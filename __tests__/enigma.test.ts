@@ -74,7 +74,7 @@ describe("Enigma", () => {
 
       enigma.configure(settings);
 
-      expect(() => enigma.cypher(character)).toThrowError(
+      expect(() => enigma.cypher(character)).toThrow(
         new Error(`Invalid character "${character}" found in position "0"`)
       );
     });

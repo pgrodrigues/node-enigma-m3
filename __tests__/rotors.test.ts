@@ -18,7 +18,7 @@ describe("Rotors", () => {
       const rotors = new Rotors(logger);
 
       // @ts-expect-error Intentional usage of a different type
-      expect(() => rotors.configure(undefined)).toThrowError(
+      expect(() => rotors.configure(undefined)).toThrow(
         new Error("Rotors settings are missing")
       );
     });
@@ -28,7 +28,7 @@ describe("Rotors", () => {
       const rotors = new Rotors(logger);
 
       // @ts-expect-error Intentional usage of a different type
-      expect(() => rotors.configure("I")).toThrowError(
+      expect(() => rotors.configure("I")).toThrow(
         new Error("Rotors settings must be an array")
       );
     });
@@ -42,7 +42,7 @@ describe("Rotors", () => {
           { offset: "A", position: "A", type: "I" },
           { offset: "A", position: "A", type: "II" }
         ])
-      ).toThrowError(
+      ).toThrow(
         new Error(
           "Rotors settings must include the ring offset, position and type of the three rotors"
         )
@@ -60,7 +60,7 @@ describe("Rotors", () => {
           // @ts-expect-error Intentional usage of a different type
           { position: "A", type: "II" }
         ])
-      ).toThrowError(
+      ).toThrow(
         new Error(
           "Rotors settings must include the ring offset, position and type of the three rotors"
         )
@@ -78,7 +78,7 @@ describe("Rotors", () => {
           // @ts-expect-error Intentional usage of a different type
           { offset: "A", type: "II" }
         ])
-      ).toThrowError(
+      ).toThrow(
         new Error(
           "Rotors settings must include the ring offset, position and type of the three rotors"
         )
@@ -96,7 +96,7 @@ describe("Rotors", () => {
           // @ts-expect-error Intentional usage of a different type
           { offset: "A", position: "A" }
         ])
-      ).toThrowError(
+      ).toThrow(
         new Error(
           "Rotors settings must include the ring offset, position and type of the three rotors"
         )
@@ -114,7 +114,7 @@ describe("Rotors", () => {
           { offset: "A", position: "A", type: "II" },
           { offset: "A", position: "A", type: invalidType }
         ])
-      ).toThrowError(new Error(`Invalid rotor type: ${invalidType}`));
+      ).toThrow(new Error(`Invalid rotor type: ${invalidType}`));
     });
 
     test("Should throw an error when configuring a rotor of the same type of an already configured rotor", () => {
@@ -128,7 +128,7 @@ describe("Rotors", () => {
           { offset: "A", position: "A", type: existingType },
           { offset: "A", position: "A", type: existingType }
         ])
-      ).toThrowError(new Error(`There can't be multiple rotors of the same type: ${existingType}`));
+      ).toThrow(new Error(`There can't be multiple rotors of the same type: ${existingType}`));
     });
 
     test("Should throw an error when configuring the position of a rotor with an invalid letter", () => {
@@ -141,7 +141,7 @@ describe("Rotors", () => {
           { offset: "A", position: "A", type: "II" },
           { offset: "A", position: "Ç", type: "III" }
         ])
-      ).toThrowError(new Error("Invalid rotor position"));
+      ).toThrow(new Error("Invalid rotor position"));
     });
 
     test("Should throw an error when configuring the position of a rotor with an invalid letter index", () => {
@@ -154,7 +154,7 @@ describe("Rotors", () => {
           { offset: "A", position: 1, type: "II" },
           { offset: "A", position: 0, type: "III" }
         ])
-      ).toThrowError(new Error("Invalid rotor position"));
+      ).toThrow(new Error("Invalid rotor position"));
     });
 
     test("Should throw an error when configuring the ring offset of a rotor with an invalid letter", () => {
@@ -167,7 +167,7 @@ describe("Rotors", () => {
           { offset: "A", position: "A", type: "II" },
           { offset: "Ç", position: "A", type: "III" }
         ])
-      ).toThrowError(new Error("Invalid rotor ring offset"));
+      ).toThrow(new Error("Invalid rotor ring offset"));
     });
 
     test("Should throw an error when configuring the ring offset of a rotor with an invalid letter index", () => {
@@ -180,7 +180,7 @@ describe("Rotors", () => {
           { offset: 1, position: "A", type: "II" },
           { offset: 0, position: "A", type: "III" }
         ])
-      ).toThrowError(new Error("Invalid rotor ring offset"));
+      ).toThrow(new Error("Invalid rotor ring offset"));
     });
 
     test("Should not throw an error when configuring the rotors with valid types and ring offset and position as letters", () => {
@@ -193,7 +193,7 @@ describe("Rotors", () => {
           { offset: "A", position: "A", type: "II" },
           { offset: "A", position: "A", type: "III" }
         ])
-      ).not.toThrowError();
+      ).not.toThrow();
     });
 
     test("Should not throw an error when configuring the rotors with valid types and ring offset and position as letter indexes", () => {
@@ -206,7 +206,7 @@ describe("Rotors", () => {
           { offset: 1, position: 1, type: "II" },
           { offset: 1, position: 1, type: "III" }
         ])
-      ).not.toThrowError();
+      ).not.toThrow();
     });
   });
 
@@ -215,7 +215,7 @@ describe("Rotors", () => {
       const logger = new Logger(false);
       const rotors = new Rotors(logger);
 
-      expect(() => rotors.scramble("A", true)).toThrowError(new Error("Rotors not configured"));
+      expect(() => rotors.scramble("A", true)).toThrow(new Error("Rotors not configured"));
     });
 
     test("Should perform the scrambling of a letter from right to left", () => {
