@@ -10,6 +10,7 @@ export default [
   {
     rules: {
       ...eslint.configs.recommended.rules,
+      "no-undef": "off",
       "no-unused-vars": "off",
       ...tsEslint.configs.strictTypeChecked.rules,
       ...tsEslint.configs.stylisticTypeChecked.rules

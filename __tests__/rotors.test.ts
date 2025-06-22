@@ -18,9 +18,7 @@ describe("Rotors", () => {
       const rotors = new Rotors(logger);
 
       // @ts-expect-error Intentional usage of a different type
-      expect(() => rotors.configure(undefined)).toThrow(
-        new Error("Rotors settings are missing")
-      );
+      expect(() => rotors.configure(undefined)).toThrow(new Error("Rotors settings are missing"));
     });
 
     test("Should throw an error when configuring the rotors with a non-array value", () => {
@@ -28,9 +26,7 @@ describe("Rotors", () => {
       const rotors = new Rotors(logger);
 
       // @ts-expect-error Intentional usage of a different type
-      expect(() => rotors.configure("I")).toThrow(
-        new Error("Rotors settings must be an array")
-      );
+      expect(() => rotors.configure("I")).toThrow(new Error("Rotors settings must be an array"));
     });
 
     test("Should throw an error when configuring the rotors with an array with invalid length", () => {
