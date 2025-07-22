@@ -49,6 +49,15 @@ describe("Reflector", () => {
       expect(() => reflector.scramble("A")).toThrow(new Error("Reflector not configured"));
     });
 
+    test("Should return the input letter if no pair is found", () => {
+      const logger = new Logger(false);
+      const reflector = new Reflector(logger);
+
+      reflector.configure("B");
+
+      expect(reflector.scramble("Ç")).toBe("Ç");
+    });
+
     test("Should return the second letter of the pair for a given first letter", () => {
       const logger = new Logger(false);
       const reflector = new Reflector(logger);

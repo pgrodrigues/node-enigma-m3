@@ -239,5 +239,20 @@ describe("Rotors", () => {
 
       expect(rotors.scramble("A", false)).toBe("D");
     });
+
+    test("Should cover double stepping and leftmost rotor turnover logic", () => {
+      const logger = new Logger(false);
+      const rotors = new Rotors(logger);
+
+      rotors.configure([
+        { offset: "A", position: "A", type: "I" },
+        { offset: "A", position: "D", type: "II" },
+        { offset: "A", position: "U", type: "III" }
+      ]);
+
+      rotors.scramble("A", true);
+      rotors.scramble("A", true);
+      expect(rotors.scramble("A", true)).toBe("J");
+    });
   });
 });
