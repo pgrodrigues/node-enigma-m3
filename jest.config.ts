@@ -1,10 +1,10 @@
 import type { JestConfigWithTsJest } from "ts-jest";
 
-const jestConfig: JestConfigWithTsJest = {
+const config: JestConfigWithTsJest = {
   collectCoverage: true,
   preset: "ts-jest",
   testEnvironment: "node",
   verbose: true
 };
 
-export default jestConfig;
+export default config;

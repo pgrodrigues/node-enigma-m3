@@ -74,13 +74,13 @@ console.log(`Encoded message: ${encodedMessage}`); // Encoded message: LD KLKXPW
 
 Install project dependencies:
 
-```bash
+```sh
 npm install
 ```
 
 Build development version:
 
-```bash
+```sh
 npm run build
 ```
 
@@ -88,7 +88,7 @@ The build will be available in the `dist` folder.
 
 Generate the documentation:
 
-```bash
+```sh
 npm run docs
 ```
 
@@ -98,7 +98,7 @@ The documentation will be available in the `docs` folder.
 
 The unit tests are available in the `__tests__` folder. In order to run the tests:
 
-```bash
+```sh
 npm test
 ```
 

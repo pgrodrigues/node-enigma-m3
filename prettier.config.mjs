@@ -4,7 +4,7 @@
  * @see https://prettier.io/docs/en/configuration.html
  * @type {import("prettier").Config}
  */
-const prettierConfig = {
+const config = {
   arrowParens: "always",
   bracketSpacing: true,
   endOfLine: "lf",
@@ -16,4 +16,4 @@ const prettierConfig = {
   useTabs: false
 };
 
-export default prettierConfig;
+export default config;

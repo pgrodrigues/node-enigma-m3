@@ -1,3 +1,4 @@
+import { globalIgnores } from "eslint/config";
 import eslint from "@eslint/js";
 import globals from "globals";
 import jestPlugin from "eslint-plugin-jest";
@@ -5,8 +6,12 @@ import prettierPluginRecommended from "eslint-plugin-prettier/recommended";
 import tsEslint from "typescript-eslint";
 import typescriptParser from "@typescript-eslint/parser";
 
-export default [
-  { ignores: ["coverage", "dist", "docs", "node_modules"] },
+/**
+ * @see https://eslint.org/docs/latest/use/configure/configuration-files
+ * @type {import("eslint").Linter.Config[]}
+ */
+const config = [
+  globalIgnores(["coverage/**", "dist/**", "docs/**"]),
   {
     rules: {
       ...eslint.configs.recommended.rules,
@@ -36,3 +41,5 @@ export default [
   },
   prettierPluginRecommended
 ];
+
+export default config;
