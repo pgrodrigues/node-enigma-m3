@@ -14,7 +14,7 @@ export interface AvailableReflector {
  * @interface
  */
 export interface ReflectorInterface {
-  configure(type: string): void;
+  configure(type?: string): void;
   scramble(letter: string): string;
 }
 
@@ -62,10 +62,10 @@ export class Reflector implements ReflectorInterface {
   /**
    * Validates and configures the reflector settings for the Enigma machine.
    *
-   * @param {string} type - The type of reflector to be configured.
+   * @param {string | undefined} type - The type of reflector to be configured.
    * @throws {Error} If the settings do not allow to correctly configure the reflector.
    */
-  configure(type: string): void {
+  configure(type?: string): void {
     if (!type) {
       const errorMessage = "Reflector settings are missing";
       this._logger.error(errorMessage);

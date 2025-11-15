@@ -97,10 +97,11 @@ export class Enigma implements EnigmaInterface {
     let outputWord = "";
 
     // Parse word and cypher letter
-    [...word.trim()].forEach((char, index) => {
+    const characters = word.trim().split("");
+    characters.forEach((char, index) => {
       // Allow any character from "a" to "z", case insensitive and white space
       if (!/^[a-z ]+$/i.test(char)) {
-        const errorMessage = `Invalid character "${char}" found in position "${index}"`;
+        const errorMessage = `Invalid character "${char}" found in position "${index.toString()}"`;
         this._logger.error(errorMessage);
         throw new Error(errorMessage);
       } else if (char === " ") {

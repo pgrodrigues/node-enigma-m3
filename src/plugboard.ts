@@ -5,7 +5,7 @@ import { LoggerInterface } from "./logger";
  * @interface
  */
 export interface PlugboardInterface {
-  configure(pairs: string[]): void;
+  configure(pairs?: string[]): void;
   scramble(letter: string): string;
 }
 
@@ -30,10 +30,10 @@ export class Plugboard implements PlugboardInterface {
   /**
    * Validates and configures the plugboard settings for the Enigma machine.
    *
-   * @param {string[]} pairs - An array of letter pairs, where each pair consists of two letters.
+   * @param {string[] | undefined} pairs - An array of letter pairs, where each pair consists of two letters.
    * @throws {Error} If the settings do not allow to correctly configure the plugboard.
    */
-  configure(pairs: string[]): void {
+  configure(pairs?: string[]): void {
     if (!pairs) {
       const errorMessage = "Plugboard settings are missing";
       this._logger.error(errorMessage);

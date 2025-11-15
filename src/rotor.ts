@@ -1,5 +1,5 @@
+import { applyOffsetToLetter, getLetterFromIndex, getLetterIndex } from "./utils";
 import { LoggerInterface } from "./logger";
-import Utils from "./utils";
 
 /**
  * Interface for a rotor, representing its properties and methods.
@@ -67,28 +67,19 @@ export class Rotor implements RotorInterface {
    * @returns {string} The scrambled output letter.
    */
   scramble(letter: string, rightToLeft: boolean): string {
-    let outputLetter = Utils.applyOffsetToLetter(letter, Utils.getLetterIndex(this._position));
+    let outputLetter = applyOffsetToLetter(letter, getLetterIndex(this._position));
 
-    const entryContactLetter = Utils.applyOffsetToLetter(
-      outputLetter,
-      -Utils.getLetterIndex(this._offset)
-    );
+    const entryContactLetter = applyOffsetToLetter(outputLetter, -getLetterIndex(this._offset));
 
     if (rightToLeft) {
-      outputLetter = this._ring.charAt(Utils.getLetterIndex(entryContactLetter));
+      outputLetter = this._ring.charAt(getLetterIndex(entryContactLetter));
     } else {
-      outputLetter = Utils.getLetterFromIndex(this._ring.indexOf(entryContactLetter));
+      outputLetter = getLetterFromIndex(this._ring.indexOf(entryContactLetter));
     }
 
-    const exitContactLetter = Utils.applyOffsetToLetter(
-      outputLetter,
-      Utils.getLetterIndex(this._offset)
-    );
+    const exitContactLetter = applyOffsetToLetter(outputLetter, getLetterIndex(this._offset));
 
-    outputLetter = Utils.applyOffsetToLetter(
-      exitContactLetter,
-      -Utils.getLetterIndex(this._position)
-    );
+    outputLetter = applyOffsetToLetter(exitContactLetter, -getLetterIndex(this._position));
 
     this._logger.info(
       `[Rotor ${this._type}] ${letter} => [ ${entryContactLetter} => ${exitContactLetter} ] => ${outputLetter}`
@@ -100,7 +91,7 @@ export class Rotor implements RotorInterface {
    * Steps the rotor to its next position.
    */
   step(): void {
-    this._position = Utils.applyOffsetToLetter(this._position, 1);
+    this._position = applyOffsetToLetter(this._position, 1);
     this._stepCount += 1;
 
     this._logger.info(`[Rotor ${this._type}] position is now ${this._position}`);

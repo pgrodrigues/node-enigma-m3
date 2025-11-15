@@ -1,31 +1,25 @@
-import { globalIgnores } from "eslint/config";
+// @ts-check
+
+import { defineConfig, globalIgnores } from "eslint/config";
 import eslint from "@eslint/js";
 import globals from "globals";
 import jestPlugin from "eslint-plugin-jest";
 import prettierPluginRecommended from "eslint-plugin-prettier/recommended";
 import tsEslint from "typescript-eslint";
-import typescriptParser from "@typescript-eslint/parser";
 
 /**
  * @see https://eslint.org/docs/latest/use/configure/configuration-files
  * @type {import("eslint").Linter.Config[]}
  */
-const config = [
+const config = defineConfig([
   globalIgnores(["coverage/**", "dist/**", "docs/**"]),
-  {
-    rules: {
-      ...eslint.configs.recommended.rules,
-      "no-undef": "off",
-      "no-unused-vars": "off",
-      ...tsEslint.configs.strictTypeChecked.rules,
-      ...tsEslint.configs.stylisticTypeChecked.rules
-    }
-  },
+  eslint.configs.recommended,
   {
     files: ["src/**/*.ts"],
+    extends: [tsEslint.configs.strictTypeChecked, tsEslint.configs.stylisticTypeChecked],
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
-      parser: typescriptParser,
+      parser: tsEslint.parser,
       parserOptions: {
         ecmaVersion: "latest",
         project: "./tsconfig.json",
@@ -36,10 +30,10 @@ const config = [
   },
   {
     files: ["__tests__/**/*.test.ts"],
-    languageOptions: { globals: { ...globals.node, ...jestPlugin.environments.globals.globals } },
-    ...jestPlugin.configs["flat/recommended"]
+    extends: [jestPlugin.configs["flat/recommended"]],
+    languageOptions: { globals: { ...globals.node, ...jestPlugin.environments.globals.globals } }
   },
   prettierPluginRecommended
-];
+]);
 
 export default config;

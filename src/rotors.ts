@@ -1,6 +1,6 @@
+import { applyOffsetToLetter, getLetterFromIndex } from "./utils";
 import { LoggerInterface } from "./logger";
 import { Rotor, RotorInterface } from "./rotor";
-import Utils from "./utils";
 
 /**
  * Interface representing the default properties of a rotor for the Enigma machine.
@@ -27,7 +27,7 @@ export interface RotorSettingsInterface {
  * @interface
  */
 export interface RotorsInterface {
-  configure(rotorSettings: RotorSettingsInterface[]): void;
+  configure(rotorSettings?: RotorSettingsInterface[]): void;
   scramble(letter: string, rightToLeft: boolean): string;
 }
 
@@ -63,10 +63,10 @@ export class Rotors implements RotorsInterface {
   /**
    * Validates and configures the rotor settings for the Enigma machine.
    *
-   * @param {RotorSettingsInterface[]} rotorsSettings - An array of rotor settings.
+   * @param {RotorSettingsInterface[] | undefined} rotorsSettings - An array of rotor settings.
    * @throws {Error} If the rotors settings do not allow to correctly configure the rotors.
    */
-  configure(rotorsSettings: RotorSettingsInterface[]): void {
+  configure(rotorsSettings?: RotorSettingsInterface[]): void {
     if (!rotorsSettings) {
       const errorMessage = "Rotors settings are missing";
       this._logger.error(errorMessage);
@@ -118,7 +118,7 @@ export class Rotors implements RotorsInterface {
       if (typeof rs.position === "string" && /^[A-Z]$/.test(rs.position)) {
         position = rs.position;
       } else if (typeof rs.position === "number" && rs.position > 0 && rs.position < 27) {
-        position = Utils.getLetterFromIndex(rs.position - 1);
+        position = getLetterFromIndex(rs.position - 1);
       } else {
         const errorMessage = "Invalid rotor position";
         this._logger.error(errorMessage);
@@ -128,7 +128,7 @@ export class Rotors implements RotorsInterface {
       if (typeof rs.offset === "string" && /^[A-Z]$/.test(rs.offset)) {
         offset = rs.offset;
       } else if (typeof rs.offset === "number" && rs.offset > 0 && rs.offset < 27) {
-        offset = Utils.getLetterFromIndex(rs.offset - 1);
+        offset = getLetterFromIndex(rs.offset - 1);
       } else {
         const errorMessage = "Invalid rotor ring offset";
         this._logger.error(errorMessage);
@@ -178,9 +178,7 @@ export class Rotors implements RotorsInterface {
       }
 
       // Check for turnover of the middle rotor
-      if (
-        this._rotors[1].turnover.includes(Utils.applyOffsetToLetter(this._rotors[1].position, 1))
-      ) {
+      if (this._rotors[1].turnover.includes(applyOffsetToLetter(this._rotors[1].position, 1))) {
         if (this._rotors[1].stepCount % 26 === 0) {
           this._logger.info(`[Rotor ${this._rotors[1].type}] turnover position`);
           this._rotors[1].step();
