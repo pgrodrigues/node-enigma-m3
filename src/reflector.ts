@@ -1,4 +1,4 @@
-import { LoggerInterface } from "./logger";
+import type { LoggerInterface } from "./logger";
 
 /**
  * Interface representing the configuration of a reflector for the Enigma machine.

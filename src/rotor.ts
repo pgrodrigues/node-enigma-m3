@@ -1,5 +1,5 @@
 import { applyOffsetToLetter, getLetterFromIndex, getLetterIndex } from "./utils";
-import { LoggerInterface } from "./logger";
+import type { LoggerInterface } from "./logger";
 
 /**
  * Interface for a rotor, representing its properties and methods.

@@ -4,10 +4,11 @@
   "description": "Enigma M3 simulator",
   "author": "Pedro Rodrigues",
   "license": "MIT",
-  "main": "dist/enigma.js",
-  "types": "dist/enigma.d.ts",
+  "main": "./dist/enigma.js",
+  "types": "./dist/enigma.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/enigma.d.ts",
       "import": "./dist/enigma.js",
       "require": "./dist/enigma.js"
     }
@@ -52,7 +53,7 @@
     "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
     "typedoc": "^0.28.19",
-    "typescript": "5.9.3",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1"
   }
 }

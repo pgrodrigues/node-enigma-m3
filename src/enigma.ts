@@ -1,7 +1,7 @@
-import { Logger, LoggerInterface } from "./logger";
-import { Plugboard, PlugboardInterface } from "./plugboard";
-import { Reflector, ReflectorInterface } from "./reflector";
-import { Rotors, RotorSettingsInterface, RotorsInterface } from "./rotors";
+import { Logger, type LoggerInterface } from "./logger";
+import { Plugboard, type PlugboardInterface } from "./plugboard";
+import { Reflector, type ReflectorInterface } from "./reflector";
+import { Rotors, type RotorSettingsInterface, type RotorsInterface } from "./rotors";
 
 /**
  * Interface for Enigma machine settings, including plugboard, reflector and rotor configurations.

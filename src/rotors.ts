@@ -1,6 +1,6 @@
 import { applyOffsetToLetter, getLetterFromIndex } from "./utils";
-import { LoggerInterface } from "./logger";
-import { Rotor, RotorInterface } from "./rotor";
+import { Rotor, type RotorInterface } from "./rotor";
+import type { LoggerInterface } from "./logger";
 
 /**
  * Interface representing the default properties of a rotor for the Enigma machine.

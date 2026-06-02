@@ -1,4 +1,4 @@
-import { LoggerInterface } from "./logger";
+import type { LoggerInterface } from "./logger";
 
 /**
  * Interface for a plugboard that can configure pairs of letters and scramble input letters.
